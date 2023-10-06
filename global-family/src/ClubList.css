@@ -12,6 +12,14 @@
     margin-bottom: 20px;
   }
   
+  .club-search {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
   .club-list {
     list-style-type: none;
     padding: 0;
@@ -28,4 +36,14 @@
   
   .club-item:hover {
     background-color: #e1e1e1;
+  }
+  
+  .club-item h2 {
+    margin: 0;
+    color: #333;
+  }
+  
+  .club-item p {
+    margin: 10px 0 0;
+    color: #666;
   }
