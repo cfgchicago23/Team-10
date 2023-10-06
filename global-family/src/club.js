@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import './App.css';
+import './ClubList.css';
 
-class App extends Component {
+class ClubList extends Component {
   constructor() {
     super();
     this.state = {
-      clubs: [], // Initialize an empty array to store the list of clubs
+      clubs: [],
     };
   }
 
   componentDidMount() {
-    // Fetch the list of clubs from your Flask API
     fetch('/api/clubs')
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ clubs: data }); // Update the state with the fetched clubs
+        this.setState({ clubs: data });
       })
       .catch((error) => {
         console.error('Error fetching clubs:', error);
@@ -24,11 +23,11 @@ class App extends Component {
   render() {
     const { clubs } = this.state;
     return (
-      <div>
-        <h1>Club List</h1>
-        <ul>
+      <div className="club-container">
+        <h1 className="club-header">Club List</h1>
+        <ul className="club-list">
           {clubs.map((club) => (
-            <li key={club.id}>{club.name}</li>
+            <li key={club.id} className="club-item">{club.name}</li>
           ))}
         </ul>
       </div>
@@ -36,4 +35,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default ClubList;
