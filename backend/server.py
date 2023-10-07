@@ -47,8 +47,8 @@ def signup():
     return 200
 
 
-@app.route("/content", methods=["GET"])
-def content():
+# @app.route("/content", methods=["GET"])
+# def content():
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000, host="0.0.0.0")
