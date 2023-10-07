@@ -21,39 +21,30 @@ const Login = () => {
   const users = [{ username: "Jane", password: "test" }];
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
-    // console.log("in handlesubmit");
-    // const account = users.find((user) => user.username === username);
-    // if (account && account.password === password) {
-    //   // put into the database that this person logged in
-    //   console.log(" in");
-    //   localStorage.setItem("authenticated", true);
-    //   console.log(" in1");
-    //   navigate("/ContentPage");
-    //   console.log(" in2");
-    //   //   setLogged(Math.random());
-    // }
-    var xhr = new XMLHttpRequest();
-    var url = "http://127.0.0.1:8000/api/login";
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var json = JSON.parse(xhr.responseText);
-        console.log(json.email + ", " + json.password);
-      }
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password }),
     };
-    var data = JSON.stringify({
-      email: email,
-      password: password,
-    });
-    xhr.send(data);
-
-    if (xhr.status === 200) {
-      navigate("/ContentPage");
-    } else {
-      alert("Incorrect username or password");
-    }
+    fetch("http://127.0.0.1:8000/api/login", requestOptions)
+      .then((response) => {
+        if (response.status === 200) {
+          // Navigate to the content page
+          navigate("/ContentPage");
+        } else {
+          // Display an alert for incorrect username or password
+          alert("Incorrect username or password");
+        }
+        // return response.json();
+      })
+      .then((data) => {
+        // If needed, handle the response data here
+        console.log(data);
+      })
+      .catch((error) => {
+        // Handle any fetch errors here
+        console.error("Error:", error);
+      });
 
     e.preventDefault();
     console.log("in handlesubmit");

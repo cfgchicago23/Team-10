@@ -62,7 +62,7 @@ const SignUpPage = () => {
 
     // console.log("newProduct:", newProduct);
 
-    // const response = await fetch("http://127.0.0.1:8000/signup", {
+    // const response = await fetch("http://127.0.0.1:8000/api/signup", {
     //   method: "POST",
     //   headers: {
     //     "Content-Type": "application/json; charset=utf-8",
@@ -71,27 +71,38 @@ const SignUpPage = () => {
     // });
     // console.log("status:", response.status);
 
-    var xhr = new XMLHttpRequest();
-    var url = "http://127.0.0.1:8000/api/signup";
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var json = JSON.parse(xhr.responseText);
-        console.log(json.email + ", " + json.password);
-      }
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: firstName + " " + lastName,
+        email: email,
+        password: password,
+        type: userType,
+        country: country,
+      }),
     };
-    var data = JSON.stringify({
-      name: firstName + " " + lastName,
-      email: email,
-      password: password,
-      type: userType,
-      country: country,
-    });
-    xhr.send(data);
-
+    fetch("http://127.0.0.1:8000/api/signup", requestOptions)
+      .then((response) => {
+        if (response.status === 200) {
+          // Navigate to the content page
+          navigate("/Login");
+        } else {
+          // Display an alert for incorrect username or password
+          alert("Error");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // If needed, handle the response data here
+        console.log(data);
+      })
+      .catch((error) => {
+        // Handle any fetch errors here
+        console.error("Error:", error);
+      });
     e.preventDefault();
-    //console.log("in handlesubmit");
+    console.log("in handlesubmit");
     navigate("/Login");
   };
 
