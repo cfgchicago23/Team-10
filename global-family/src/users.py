@@ -47,6 +47,24 @@ def get_joined_clubs(user_id):
         return jsonify({"joined_clubs": club_ids})
     return jsonify({"error": "User not found or no clubs joined."})
 
+# Club model
+class Club(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+    users = db.relationship('User', secondary='user_clubs')
+
+# User model
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    clubs = db.relationship('Club', secondary='user_clubs')
+
+# Association table for many-to-many relationship between User and Club
+user_clubs = db.Table('user_clubs',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('club_id', db.Integer, db.ForeignKey('club.id'))
+)
+
 if __name__ == '__main__':
     db.create_all()
     app.run(debug=True)

@@ -1,41 +1,56 @@
 .user-container {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     padding: 20px;
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .user-header {
     text-align: center;
     color: #333;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
+    padding: 10px;
     margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .club-list {
     list-style-type: none;
     padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
 }
 
 .club-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    flex: 1 1 calc(33.333% - 20px);
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.club-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .club-item button {
-    padding: 5px 10px;
+    padding: 10px 15px;
     background-color: #007BFF;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 10px;
+    display: block;
+    width: 100%;
 }
 
 .club-item button:hover {
@@ -52,6 +67,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 18px;
 }
 
 .toggle-button:hover {
