@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import './App.css';
 
 class App extends Component {
@@ -54,6 +55,63 @@ class App extends Component {
         <ul>
           {clubs.map((club) => (
             <li key={club.id}>{club.name}</li>
+=======
+import './ClubList.css';
+
+class ClubList extends Component {
+  constructor() {
+    super();
+    this.state = {
+      clubs: [],
+      isLoading: true,
+      error: null,
+      search: ''
+    };
+  }
+
+  componentDidMount() {
+    fetch('/api/clubs')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        this.setState({ clubs: data, isLoading: false });
+      })
+      .catch((error) => {
+        this.setState({ error, isLoading: false });
+      });
+  }
+
+  handleSearchChange = (e) => {
+    this.setState({ search: e.target.value });
+  }
+
+  render() {
+    const { clubs, isLoading, error, search } = this.state;
+    const filteredClubs = clubs.filter(club => club.name.toLowerCase().includes(search.toLowerCase()));
+
+    return (
+      <div className="club-container">
+        <h1 className="club-header">Club List</h1>
+        {isLoading && <p>Loading clubs...</p>}
+        {error && <p>Error loading clubs: {error.message}</p>}
+        <input 
+          type="text" 
+          placeholder="Search clubs..." 
+          className="club-search"
+          value={search}
+          onChange={this.handleSearchChange}
+        />
+        <ul className="club-list">
+          {filteredClubs.map((club) => (
+            <li key={club.id} className="club-item">
+              <h2>{club.name}</h2>
+              {club.description && <p>{club.description}</p>}
+            </li>
+>>>>>>> a985a5032c1c18d8400778825ae19a50f09c98e8
           ))}
         </ul>
       </div>
@@ -61,4 +119,8 @@ class App extends Component {
   }
 }
 
+<<<<<<< HEAD
 export default App;
+=======
+export default ClubList;
+>>>>>>> a985a5032c1c18d8400778825ae19a50f09c98e8
