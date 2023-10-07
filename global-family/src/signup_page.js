@@ -5,6 +5,7 @@ import Login from "./login_page";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./App.css";
 
 const SignUpPage = () => {
   const [username, setusername] = useState("");
@@ -87,7 +88,7 @@ const SignUpPage = () => {
 
   return (
     <div>
-        <h3>Please sign in</h3>
+        <h3 className="sign-in-message">Please sign in</h3>
       <form onSubmit={handleSubmit}>
         <label>First Name</label>
         <input

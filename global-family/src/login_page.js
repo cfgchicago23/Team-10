@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import Dashboard from "./Dashboard";
 import { useEffect } from "react";
+import "./App.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Login = () => {
 
   return (
     <div>
-      <h3>Please log in</h3>
+      <h3 className="sign-in-message">Please log in</h3>
       <form onSubmit={handleSubmit}>
         <label>Username</label>
         <input
