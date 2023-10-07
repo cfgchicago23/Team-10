@@ -1,10 +1,12 @@
 import json
+import uuid
 
 from bson import UuidRepresentation
-from flask import Flask, jsonify, request
+
 from pymongo import MongoClient
 import bcrypt
-import uuid
+from flask import Flask, jsonify, request
+
 from dotenv import dotenv_values
 from flask_cors import CORS, cross_origin
 
@@ -28,6 +30,9 @@ db = db_client['flask_db']
 user_accounts = db["user_accounts"]
 clubs = db["clubs"]
 
+@app.route('/api/get-signed-in-user', methods=['GET'])
+def get_signed_in_user():
+    return jsonify(SIGNED_IN_USER)
 
 @app.route('/api/clubs/list', methods=['GET'])
 def get_clubs():

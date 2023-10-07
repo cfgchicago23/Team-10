@@ -17,13 +17,13 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route index element={<App />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/ContentPage" element={<ContentPage />} />
-        <Route path="/TraffickingPage" element={<TraffickingPage />} />
-        <Route path="/WellnessPage" element={<WellnessPage />} />
+        <Route path="/Login" element={<Login />}/>
+        <Route path="/ContentPage" element={<ContentPage/>} />
+        <Route path="/TraffickingPage" element={<TraffickingPage/>}/>
+        <Route path="/WellnessPage" element={<WellnessPage/>} />
         <Route path="/Club" element={<ClubPage />} />
-        <Route path="/HelpPage" element={<HelpPage />} />
-        <Route path="/SignUp" element={<SignUpPage />} />
+       <Route path="/HelpPage" element={<HelpPage />} />
+        <Route path="/SignUp" element={<SignUpPage />}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

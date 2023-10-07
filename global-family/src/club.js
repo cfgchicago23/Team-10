@@ -10,6 +10,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import { useLocation, Link } from "react-router-dom";
 
 
+
 class ClubList extends Component {
   constructor() {
     super();
@@ -33,7 +34,14 @@ class ClubList extends Component {
   
   
   componentDidMount() {
-    //this.fetchClubs();
+    fetch('https://localhost:8000/api/get-signed-in-user')
+        .then((response) => response.json())
+        .then((data) => {
+            this.setState({ signedInUser: data });
+        })
+        .catch((error) => {
+            console.error('Error fetching user data:', error);
+        });
   }
 
   handleNewClubDescriptionChange = (e) => {
@@ -45,7 +53,7 @@ class ClubList extends Component {
   }
 
   fetchClubs() {
-    fetch('/api/clubs')
+    fetch('https://localhost:8000/api/clubs/list')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -60,19 +68,33 @@ class ClubList extends Component {
       });
   }
 
-  fetchClubMembers(clubId) {
-    // Simulate fetching club members from the server
-    // Replace this with your actual API call to fetch members
-    const members = ['a', 'b', 'c'];
 
-    // Update the state with club members
-    this.setState((prevState) => ({
-      clubMembers: {
-        ...prevState.clubMembers,
-        [clubId]: members,
+  //method for those who are joining the club
+  fetchClubMembers = (clubName, userEmail) => {
+    // Make a POST request to /api/clubs/addmember
+    fetch('https://localhost:8000/api/clubs/addmember', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    }));
-  }
+      body: JSON.stringify({
+        club_name: clubName,
+        user_email: userEmail,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+  
+
+      })
+      .catch((error) => {
+        console.error('Error adding member to club:', error);
+        // Handle errors here if needed
+      });
+  };
+  //add a method for those who want to join but aren't admitted. 
 
   handleSearchChange = (e) => {
     this.setState({ search: e.target.value });
@@ -110,45 +132,40 @@ class ClubList extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-  const { newClubName, newClubDescription, newClubCountry } = this.state; // Added 'this.state'
-
-  const newClub = {
-    id: this.state.clubs.length + 1,
-    name: newClubName,
-    description: newClubDescription, // Access using this.state
-    country: newClubCountry, // Access using this.state
-    mentor_id: 1,
-  };
-
-  this.setState((prevState) => ({
-    clubs: [...prevState.clubs, newClub],
-    newClubName: '',
-    newClubDescription: '',
-    newClubCountry: '',
-  }));
-
-  fetch('/api/clubs/add', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
+    const { newClubName, newClubDescription, newClubCountry } = this.state;
+  
+    // Create a new club object
+    const newClub = {
       name: newClubName,
-      description: newClubDescription, // Access using this.state
-      country: newClubCountry, // Access using this.state
-      mentor_id: 1,
-    }),
-  })
-    .then((response) => response.json())
-    .then(() => {
-      this.fetchClubs();
-      this.setState({ newClubName: '', newClubDescription: '', newClubCountry: '' });
+      description: newClubDescription,
+      country: newClubCountry,
+    };
+  
+    // Make a POST request to your Flask API endpoint for adding a club
+    fetch('https://localhost:8000/api/clubs/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newClub),
     })
-    .catch((error) => {
-      console.error('Error adding club:', error);
-    });
-  }
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        // Club added successfully, reset the form and fetch updated club list
+        this.setState({
+          newClubName: '',
+          newClubDescription: '',
+          newClubCountry: '',
+        });
+        this.fetchClubs(); // Fetch updated club list
+      })
+      .catch((error) => {
+        console.error('Error adding club:', error);
+        // Handle errors here if needed
+      });
+  };
 
   render() {
     const { clubs, isLoading, error, search, newClubName, newClubDescription, newClubCountry, clubMembers, expandedClub } = this.state;
