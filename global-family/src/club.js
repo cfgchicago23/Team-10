@@ -4,6 +4,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { motion } from 'framer-motion';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import PeopleIcon from '@mui/icons-material/People';
+import { useLocation, Link } from "react-router-dom";
 
 
 class ClubList extends Component {
@@ -19,9 +23,15 @@ class ClubList extends Component {
       newClubCountry: '', // New club country field
       clubMembers: {},
       expandedClub: null,
+      selectedTab: 'club',
     };
   }
-
+  handleBottomNavChange = (event, newValue) => {
+    console.log(newValue);
+    this.setState({ selectedTab: newValue });
+  };
+  
+  
   componentDidMount() {
     //this.fetchClubs();
   }
@@ -143,7 +153,6 @@ class ClubList extends Component {
   render() {
     const { clubs, isLoading, error, search, newClubName, newClubDescription, newClubCountry, clubMembers, expandedClub } = this.state;
     const filteredClubs = clubs.filter(club => club.name.toLowerCase().includes(search.toLowerCase()));
-
     return (
       <Container maxWidth="lg" style={{ marginTop: '40px', background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', padding: '40px', borderRadius: '15px' }}>
         <CssBaseline />
@@ -243,6 +252,20 @@ class ClubList extends Component {
             </Card>
           </motion.div>
         ))}
+      <BottomNavigation value={this.state.selectedTab} onChange={this.handleBottomNavChange}>
+        <BottomNavigationAction
+          label="ContentPage"
+          value="content"
+          icon={<HomeIcon />}
+          component={Link} to="/ContentPage" // Link to the home page
+        />
+        <BottomNavigationAction
+          label="Clubs"
+          value="club"
+          icon={<PeopleIcon />}
+          component={Link} to="/club" // Link to the clubs page
+        />
+      </BottomNavigation>
       </Container>
     );
   }

@@ -60,3 +60,6 @@
 .tile.active {
   background-color: blue;
 }
+.custom-bottom-navigation {
+  padding: 0; /* Adjust padding to 0 */
+}
