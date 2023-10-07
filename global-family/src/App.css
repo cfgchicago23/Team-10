@@ -105,3 +105,50 @@ body {
     height: 150px;
   }
 }
+
+@media only screen and ((max-height: 480px)) {
+  /* hide element on small screens */
+  .container {
+    padding: 20px;
+    height: auto;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .formTextField {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .submitButton {
+    width: 100%;
+  }
+
+  .hide-when-small {
+    /* background-color: red; */
+    visibility: hidden;
+  }
+
+  .please-login {
+    padding-top: 50px;
+    font-size:smaller;
+    background-color: red;
+  }
+  }
+  
+  @media only screen and (min-width: 480px) and (max-width: 1024px) {
+  /* show element on medium-sized screens */
+  .container {
+    padding: 40px;
+    border-radius: 10px;
+    position: relative;
+    height: auto;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+  }
+  

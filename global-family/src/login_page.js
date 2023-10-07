@@ -72,6 +72,7 @@ const Login = () => {
           center: "10px",
           fontFamily: "times new roman",
         }}
+        className="hide-when-small"
       >
         Thrive
       </Typography>
@@ -90,6 +91,7 @@ const Login = () => {
             textAlign: "center",
             fontFamily: "sans-serif",
           }}
+          className="please-login"
         >
           Please log in
         </Typography>
