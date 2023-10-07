@@ -45,12 +45,11 @@ def create_club():
     new_club = Club(
         name=data['name'],
         description=data['description'],
-        mentor_id=data['mentor_id']
-        # Add other club-related data here
+        # ... other fields ...
     )
     db.session.add(new_club)
     db.session.commit()
-    return jsonify({"message": "Club created successfully."})
+    return jsonify({"message": "Club created successfully.", "club": data})
 
 # API routes for events (similar structure as clubs)
 
