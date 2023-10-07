@@ -91,7 +91,7 @@
 import React, { useState, Children, cloneElement } from "react";
 import "./carousel.css";
 import photo1 from ".//images/pic1.png";
-import photo2 from ".//images/pic2.png";
+import photo2 from ".//images/pic2.5.png";
 import photo3 from ".//images/pic3.png";
 
 const CarouselItem = ({ children, width }) => {
@@ -168,7 +168,7 @@ const images = ["./src/images/pic1.png", "global-family/src/images/pic2.png", "g
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", transform: "translate(-30%, 400%)" }}>
         {/* <label style={{ marginTop: "-46%" }} className="clothing-label">Hat</label> */}
       </div>
-      <div style={{ position: "relative", marginTop: "16%" }}>
+      <div style={{ position: "relative", marginTop: "6%" }}>
         <Carousel onActiveIndexChange={setCurrentPicIndex}>
         <CarouselItem key={0}>
               <img src={photo1} alt="picture regarding basic definitions of human trafficking" className="carousel-image"/> 

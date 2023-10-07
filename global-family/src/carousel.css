@@ -10,15 +10,16 @@
 
     .carousel-image {
        
-        max-width: 700px;
+        max-width: 600px;
         /* border-radius: 20px; */
         /* border: 2px solid black;  */
         /* height: 300px; */
-        margin-top: 10px;
-        padding: 50px;
+        /* margin-top: 10px; */
+        /* padding: 50px; */
         max-height: 1300px;
-        box-sizing: border-box; 
-    
+        /* box-sizing: border-box;  */
+
+        
         
     }
     
@@ -31,20 +32,25 @@
     font-size: 30px;
     font-weight: bold;
     font-family: sans-serif;
-    height: auto;
+    height: auto; 
     width: 100px;
     }
     
     
-    .indicators {
-    display: flex;
-    justify-content: center;
+    
+    .sub-title {
+        margin-bottom: 300;
     }
+
+    .indicators {
+        display: flex;
+        justify-content: center;
+        }
     
     
     .indicators > button {
     position: relative;
-    top: -50px;
+    top: -125px;
     }
     
     
@@ -76,7 +82,7 @@
     border-width: 2.5rem 0 2.5rem 1.5rem;
     /* position: relative; */
     position: absolute;
-    right: -200px;
+    right: -350px;
     transform: translateY(-120%);
     }
     
@@ -85,7 +91,7 @@
     border-color: transparent #d1d5db transparent transparent;
     border-width: 2.5rem 1.5rem 2.5rem 0;
     position: absolute;
-    left: -200px;
+    left: -350px;
     transform: translateY(-120%);
     }
     
