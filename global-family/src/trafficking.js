@@ -68,41 +68,31 @@ const CarouselItem = ({ children, width }) => {
   };
 
 
-const TraffickingPage = () => {
-const [currentPicIndex, setCurrentPicIndex] = useState(0);
-const images = ["./src/images/pic1.png", "global-family/src/images/pic2.png", "global-family/src/images/pic3.png"];
-
-  return (
-    <div>
-      <h1 style={{ textAlign: "center" }}>Module 1: Human Trafficking Awareness</h1>
-      <h3 className="sub-title">Scroll through the lessons to learn more about potential resources!</h3>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", transform: "translate(-30%, 400%)" }}>
-        {/* <label style={{ marginTop: "-46%" }} className="clothing-label">Hat</label> */}
-      </div>
-      <div style={{ position: "relative", marginTop: "6%" }}>
+  const TraffickingPage = () => {
+    const [currentPicIndex, setCurrentPicIndex] = useState(0);
+  
+    return (
+      <div style={{ padding: '40px', background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <h1 style={{ textAlign: "center", color: '#FFF', fontFamily: 'Arial, sans-serif', fontWeight: 'bold', marginBottom: '20px' }}>
+          Module 1: Human Trafficking Awareness
+        </h1>
+        <h3 style={{ textAlign: "center", color: '#FFF', fontFamily: 'Arial, sans-serif', marginBottom: '40px' }}>
+          Scroll through the lessons to learn more about potential resources!
+        </h3>
+  
         <Carousel onActiveIndexChange={setCurrentPicIndex}>
-        <CarouselItem key={0}>
-              <img src={photo1} alt="picture regarding basic definitions of human trafficking" className="carousel-image"/> 
-              {/* <img src={"/src/images/pic1.png"} alt="this" key={0} className="resource" /> */}
-            </CarouselItem>
-            <CarouselItem key={1}>
+          <CarouselItem key={0}>
+            <img src={photo1} alt="picture regarding basic definitions of human trafficking" className="carousel-image" />
+          </CarouselItem>
+          <CarouselItem key={1}>
             <img src={photo2} alt="picture regarding awareness of human trafficking/what to do next" className="carousel-image" />
-              {/* <img src={"/src/images/pic1.png"} alt="this" key={0} className="resource" /> */}
-            </CarouselItem>
-            <CarouselItem key={2}>
-            <img src={photo3} alt="picture regarding what to do next / next steps" className="carousel-image"/>
-              {/* <img src={"/src/images/pic1.png"} alt="this" key={0} className="resource" /> */}
-            </CarouselItem>
-          {/* {images.map((image, i) => (
-            <CarouselItem key={i}>
-              <img src={image} alt="this" key={i} className="resource" />
-            </CarouselItem>
-          ))} */}
+          </CarouselItem>
+          <CarouselItem key={2}>
+            <img src={photo3} alt="picture regarding what to do next / next steps" className="carousel-image" />
+          </CarouselItem>
         </Carousel>
-        {/* <button onClick={addPastOutfit} className="dress-me-button">Dress Me</button> */}
       </div>
-    </div>
-  );
-}; 
+    );
+  };
 
 export default TraffickingPage;
