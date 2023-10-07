@@ -10,6 +10,7 @@ import WellnessPage from "./wellness";
 import HelpPage from "./help";
 import SignUpPage from "./signup_page";
 import ClubPage from "./club";
+import SpacesPage from "./spaces_page";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -24,6 +25,7 @@ root.render(
         <Route path="/Club" element={<ClubPage />} />
         <Route path="/HelpPage" element={<HelpPage />} />
         <Route path="/SignUp" element={<SignUpPage />} />
+        <Route path="/SpacesPage" element={<SpacesPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
