@@ -28,43 +28,119 @@ user_accounts = db["user_accounts"]
 clubs = db["clubs"]
 
 
+@app.route('/api/clubs/list', methods=['GET'])
+def get_clubs():
+    try:
+        # fetch the clubs
+        club_documents = SIGNED_IN_USER['clubs']
+
+        # populate the JSON response
+        list_response = []
+        for club_document in club_documents:
+            list_response += {"id": club_document['club_id'],
+                              "name": club_document['name'],
+                              "description": club_document['description']}
+        return jsonify(list_response), 200
+
+    except Exception as e:
+        return f"error message: \n{e}", 400
+
+
+@app.route('/api/clubs/addmember', methods=['POST'])
+def add_member_to_club():
+    try:
+        # parse JSON
+        data = request.get_json()
+        club_name = data['club_name']
+        user_email = data['user_email']
+
+        # validate that club exists
+        club_document = clubs.find_one({'name': club_name})
+        if club_document is None:
+            return jsonify({"error": "Club does not exist."}), 400
+
+        # validate that user exists
+        user_document = user_accounts.find_one({'email': user_email})
+        if user_document is None:
+            return jsonify({"error": "User does not exist."}), 400
+
+        # add user as club member
+        club_document['club_members'] += user_document
+
+        # add club to user's club list
+        user_document['clubs'] += club_document
+
+        return '', 200
+
+    except Exception as e:
+        return f"error message: \n{e}", 400
+
+
+@app.route('/api/clubs/join', methods=['POST'])
+def request_to_join_club():
+    try:
+        data = request.get_json()
+
+        # validate that the signed in user is a student
+        if (SIGNED_IN_USER is not None) & (SIGNED_IN_USER['type'] == 'club_leader'):
+            return jsonify({"error": "User must be a student."}, 400)
+
+        club_name = data['club_name']
+
+        # validate that club exists
+        club_document = clubs.find_one({'name': club_name})
+        if club_document is None:
+            return jsonify({"error": "Club does not exist."}), 400
+
+        # add user as a pending member to club
+        club_document['pending_members'] += SIGNED_IN_USER
+
+        return '', 200
+
+    except Exception as e:
+        return f"error message: \n{e}", 400
+
+
 # API route for adding a new club
 @app.route('/api/clubs/add', methods=['POST'])
 def add_club():
-    club_data = request.get_json()
-    if (SIGNED_IN_USER is not None) & (SIGNED_IN_USER['type'] == 'student'):
-        return jsonify({"error": "User must be a club leader."}, 400)
+    try:
+        club_data = request.get_json()
+        if (SIGNED_IN_USER is not None) & (SIGNED_IN_USER['type'] == 'student'):
+            return jsonify({"error": "User must be a club leader."}, 400)
 
-    # parse json
-    club_name = club_data['name']
-    club_description = club_data['description']
-    club_country = club_data['country']
+        # parse json
+        club_name = club_data['name']
+        club_description = club_data['description']
+        club_country = club_data['country']
 
-    # generate UUID for club
-    club_id = uuid.uuid4()
+        # generate UUID for club
+        club_id = uuid.uuid4()
 
-    club_mentor_id = SIGNED_IN_USER['_id']
-    club_members = []
-    club_pending_members = []
+        club_mentor_id = SIGNED_IN_USER['_id']
+        club_members = []
+        club_pending_members = []
 
-    # create document and insert into collection
-    club_document = {
-        "club_id": club_id.hex,
-        "mentor_id": club_mentor_id.hex,
-        "name": club_name,
-        "description": club_description,
-        "members": club_members,
-        "pending_members": club_pending_members,
-        "country": club_country
-    }
+        # create document and insert into collection
+        club_document = {
+            "club_id": club_id.hex,
+            "mentor_id": club_mentor_id.hex,
+            "name": club_name,
+            "description": club_description,
+            "members": club_members,
+            "pending_members": club_pending_members,
+            "country": club_country
+        }
 
-    # validate that it is not a duplicate club
-    if clubs.find_one({'name': club_name}) is not None:
-        return jsonify({"error": "This club already exists"}), 400
+        # validate that it is not a duplicate club
+        if clubs.find_one({'name': club_name}) is not None:
+            return jsonify({"error": "This club already exists"}), 400
 
-    clubs.insert_one(club_document)
+        clubs.insert_one(club_document)
 
-    return '', 200
+        return '', 200
+    except Exception as e:
+        return f"error message: \n{e}", 400
 
 
 @app.route("/api/signup", methods=["POST"])
@@ -112,6 +188,18 @@ def signup():
         return f"error message: \n{e}", 400
 
 
+@app.route("/api/signout", methods=["GET"])
+def signout():
+    try:
+
+        # set global variable to none
+        global SIGNED_IN_USER
+        SIGNED_IN_USER = None
+
+    except Exception as e:
+        return f"error message: \n{e}", 400
+
+
 @app.route("/api/login", methods=["POST"])
 def login():
     try:
@@ -132,6 +220,8 @@ def login():
             global SIGNED_IN_USER
             SIGNED_IN_USER = user_document
             return '', 200
+        else:
+            return jsonify({'error': 'Invalid password'}), 200
 
     except Exception as e:
         return f"error message: \n{e}", 400

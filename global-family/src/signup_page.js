@@ -1,12 +1,13 @@
-import React from "react";
-// import SignUpForm from "./signup_form";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./login_page";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
+=======
+import { Button, TextField, Container, Typography, CssBaseline, Box, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+>>>>>>> main
 import "./App.css";
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
   const [country, setcountry] = useState("");
@@ -17,9 +18,10 @@ const SignUpPage = () => {
   const [authenticated, setauthenticated] = useState(
     localStorage.getItem(localStorage.getItem("authenticated") || false)
   );
+
   //   const users = [{ username: "Jane", password: "test" }];
   //   const [logged, setLogged] = useState(null);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   //   const postData = async () => {
   //     try {
@@ -81,69 +83,79 @@ const SignUpPage = () => {
     xhr.send(data);
 
     e.preventDefault();
-    console.log("in handlesubmit");
+    //console.log("in handlesubmit");
     navigate("/Login");
   };
 
   return (
-    <div>
-        <h3 className="sign-in-message">Please sign in</h3>
-      <form onSubmit={handleSubmit}>
-        <label>First Name</label>
-        <input
-          type="text"
-          name="First Name"
-          value={firstName}
-          onChange={(e) => setfirstName(e.target.value)}
-        />
-        <label>Last Name</label>
-        <input
-          type="text"
-          name="Last Name"
-          value={lastName}
-          onChange={(e) => setlastName(e.target.value)}
-        />
-        <label>Email</label>
-        <input
-          type="text"
-          name="Email"
-          value={email}
-          onChange={(e) => setemail(e.target.value)}
-        />
-        <label>Username</label>
-        <input
-          type="text"
-          name="Username"
-          value={username}
-          onChange={(e) => setusername(e.target.value)}
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          name="Password"
-          onChange={(e) => setpassword(e.target.value)}
-        />
-        <input
-          type="radio"
-          value="Student"
-          name="user-type"
-          onChange={(e) => setuserType(e.target.value)}
-        />
-        Student
-        <input
-          type="radio"
-          value="Club Leader"
-          name="user-type"
-          onChange={(e) => setuserType(e.target.value)}
-        />
-        Club Leader
-        {/* get their country through a dropdown */}
-        <select
-          className="form-select"
-          id="country"
-          name="country"
-          onChange={(e) => setcountry(e.target.value)}
-        >
+    <Container style={{ marginTop: '0', background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', padding: '40px', borderRadius: '0', position: 'relative', height: '100vh' }}>
+      <CssBaseline />
+      <Typography variant="h2" style={{ color: '#FFF', position: 'absolute', top: '10px', left: '10px', fontFamily: 'cursive' }}>
+        Thrive
+      </Typography>
+      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%">
+        <Typography variant="h4" gutterBottom style={{ color: '#FFF', textAlign: 'center', fontFamily: 'sans-serif' }}>
+          Please sign up
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField 
+            fullWidth
+            variant="outlined"
+            label="First Name"
+            value={firstName}
+            onChange={(e) => setfirstName(e.target.value)}
+            style={{ marginBottom: '20px', background: '#FFF' }}
+          />
+          <TextField 
+            fullWidth
+            variant="outlined"
+            label="Last Name"
+            value={lastName}
+            onChange={(e) => setlastName(e.target.value)}
+            style={{ marginBottom: '20px', background: '#FFF' }}
+          />
+          <TextField 
+            fullWidth
+            variant="outlined"
+            label="Email"
+            value={email}
+            onChange={(e) => setemail(e.target.value)}
+            style={{ marginBottom: '20px', background: '#FFF' }}
+          />
+          <TextField 
+            fullWidth
+            variant="outlined"
+            label="Username"
+            value={username}
+            onChange={(e) => setusername(e.target.value)}
+            style={{ marginBottom: '20px', background: '#FFF' }}
+          />
+          <TextField 
+            fullWidth
+            variant="outlined"
+            label="Password"
+            type="password"
+            onChange={(e) => setpassword(e.target.value)}
+            style={{ marginBottom: '20px', background: '#FFF' }}
+          />
+          <FormControl component="fieldset" style={{ marginBottom: '20px', background: '#FFF', padding: '10px', borderRadius: '5px' }}>
+            <InputLabel>User Type</InputLabel>
+            <Select
+              value={userType}
+              onChange={(e) => setuserType(e.target.value)}
+              fullWidth
+            >
+              <MenuItem value="Student">Student</MenuItem>
+              <MenuItem value="Club Leader">Club Leader</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl fullWidth variant="outlined" style={{ marginBottom: '20px', background: '#FFF' }}>
+            <InputLabel>Country</InputLabel>
+            <Select
+              value={country}
+              onChange={(e) => setcountry(e.target.value)}
+              label="Country"
+          >
           <option>Select Country</option>
           <option value="AF">Afghanistan</option>
           <option value="AX">Aland Islands</option>
@@ -399,10 +411,15 @@ const SignUpPage = () => {
           <option value="YE">Yemen</option>
           <option value="ZM">Zambia</option>
           <option value="ZW">Zimbabwe</option>
-        </select>
-        <input type="submit" value="Submit" />
-      </form>
-    </div>
+          </Select>
+          </FormControl>
+          <Button variant="contained" color="primary" type="submit" fullWidth>
+            Submit
+          </Button>
+        </form>
+      </Box>
+    </Container>
   );
 };
+
 export default SignUpPage;
