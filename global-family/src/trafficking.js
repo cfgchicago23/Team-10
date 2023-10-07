@@ -1,92 +1,3 @@
-// import React, { useState } from 'react';
-
-// // Node Component
-// // const Node = ({ data, next }) => {
-// //   return (
-// //     <div>
-// //       <span>{data}</span>
-// //       {next && <Node data={next.data} next={next.next} />}
-// //     </div>
-// //   );
-// // };
-// // LinkedList Component
-// const LinkedList = () => {
-//   const [head, setHead] = useState(null);
-
-//   const appendNode = (data) => {
-//     const newNode = { data, next: null };
-
-//     if (!head) {
-//       setHead(newNode);
-//     } else {
-//       let current = head;
-//       while (current.next) {
-//         current = current.next;
-//       }
-//       current.next = newNode;
-//     }
-//   };
-// }
-
-//   return (
-//     <div>
-//       <h1>Linked List in React</h1>
-//       <button onClick={() => appendNode('New Node')}>Append Node</button>
-//       {head && <Node data={head.data} next={head.next} />}
-//     </div>
-//   );
-// };
-// export default LinkedList;
-// const TraffickingPage = () => {
-//     return (<div><h1>Trafficking</h1>
-//     <p>Enter PDF stuff here</p>
-//     </div>);
-// }
-// import React, { useState } from 'react';
-// import myImage from './images/pic1.png'; 
-
-// <img src={myImage} alt="My Image" />
-// // Node Component
-// const Node = ({ myImage, next }) => {
-//   return (
-//     <div>
-//       <img src={"pic1.png"} alt={myImage.alt} />
-//       {next && <Node myImage={next.myImage} next={next.next} />}
-//     </div>
-//   );
-// };
-
-// // LinkedList Component
-// const ImageList = () => {
-//   const [head, setHead] = useState(null);
-
-//   const appendImage = (src, alt) => {
-//     const newImageNode = { myImage: { src, alt }, next: null };
-
-//     if (!head) {
-//       setHead(newImageNode);
-//     } else {
-//       let current = head;
-//       while (current.next) {
-//         current = current.next;
-//       }
-//       current.next = newImageNode;
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h1>Image List in React</h1>
-//       <button onClick={() => appendImage('pic1.png', 'Image Alt Text')}>
-//         Append Image
-//       </button>
-//      {/* <img src="./global-family/src/images/pic1.png" />  */}
-//       {/* {head && <Node myImage={head.myImage} next={head.next} />} */}
-//       <img src={myImage} alt="My Image" />
-//     </div>
-//   );
-// };
-// export default ImageList;
 
 import React, { useState, Children, cloneElement } from "react";
 import "./carousel.css";
@@ -163,7 +74,7 @@ const images = ["./src/images/pic1.png", "global-family/src/images/pic2.png", "g
 
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>Module 1</h1>
+      <h1 style={{ textAlign: "center" }}>Module 1: Human Trafficking Awareness</h1>
       <h3 className="sub-title">Scroll through the lessons to learn more about potential resources!</h3>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", transform: "translate(-30%, 400%)" }}>
         {/* <label style={{ marginTop: "-46%" }} className="clothing-label">Hat</label> */}
