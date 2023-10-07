@@ -10,6 +10,8 @@ class ClubList extends Component {
       error: null,
       search: '',
       newClubName: '', // New club name input field
+      clubMembers: {}, // Store club members as an object
+      expandedClub: null, // Store the ID of the expanded club
     };
   }
 
@@ -33,6 +35,20 @@ class ClubList extends Component {
       });
   }
 
+  fetchClubMembers(clubId) {
+    // Simulate fetching club members from the server
+    // Replace this with your actual API call to fetch members
+    const members = ['a', 'b', 'c'];
+
+    // Update the state with club members
+    this.setState((prevState) => ({
+      clubMembers: {
+        ...prevState.clubMembers,
+        [clubId]: members,
+      },
+    }));
+  }
+
   handleSearchChange = (e) => {
     this.setState({ search: e.target.value });
   }
@@ -40,6 +56,19 @@ class ClubList extends Component {
   handleNewClubNameChange = (e) => {
     this.setState({ newClubName: e.target.value });
   }
+
+  handleExpandClub = (clubId) => {
+    // If the clicked club is already expanded, collapse it
+    if (this.state.expandedClub === clubId) {
+      this.setState({ expandedClub: null });
+    } else {
+      // Otherwise, expand the clicked club and fetch its members
+      this.setState({ expandedClub: clubId }, () => {
+        this.fetchClubMembers(clubId);
+      });
+    }
+  }
+
   handleDelete = (clubId) => {
     fetch(`/api/clubs/${clubId}`, {
       method: 'DELETE',
@@ -58,8 +87,6 @@ class ClubList extends Component {
     e.preventDefault();
     const { newClubName } = this.state;
 
-    
-  
     // Create a new club object
     const newClub = {
       id: this.state.clubs.length + 1, // Use this.state.clubs to access clubs
@@ -67,13 +94,13 @@ class ClubList extends Component {
       description: '', // You can add a description field if needed
       mentor_id: 1, // Replace with the actual mentor ID
     };
-  
+
     // Update the local state with the new club
     this.setState((prevState) => ({
       clubs: [...prevState.clubs, newClub],
       newClubName: '', // Clear the input field
     }));
-  
+
     // Submit the new club name to the server
     fetch('/api/clubs/add', {
       method: 'POST',
@@ -99,7 +126,7 @@ class ClubList extends Component {
   }
 
   render() {
-    const { clubs, isLoading, error, search, newClubName } = this.state;
+    const { clubs, isLoading, error, search, newClubName, clubMembers, expandedClub } = this.state;
     const filteredClubs = clubs.filter(club => club.name.toLowerCase().includes(search.toLowerCase()));
 
     return (
@@ -127,7 +154,25 @@ class ClubList extends Component {
         <ul className="club-list">
           {filteredClubs.map((club) => (
             <li key={club.id} className="club-item">
-             <h2>{club.name}</h2>
+              <h2>{club.name}</h2>
+              {expandedClub === club.id && clubMembers[club.id] && (
+                <div>
+                  <p>Members:</p>
+                  <ul className="club-members-list">
+                    {clubMembers[club.id].map((member, index) => (
+                      <li key={index} className="club-member-item">
+                        {member}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <button
+                className="club-expand-button"
+                onClick={() => this.handleExpandClub(club.id)}
+              >
+                {expandedClub === club.id ? 'Collapse' : 'Expand'}
+              </button>
               {club.description && <p>{club.description}</p>}
               <button onClick={() => this.handleDelete(club.id)}>Delete</button>
             </li>

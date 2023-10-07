@@ -1,4 +1,4 @@
-//import App from './App'; 
+import App from './App'; 
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
