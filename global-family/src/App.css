@@ -52,6 +52,7 @@
   height: 100px;
   border: 1px solid black;
   display: flex;
+  border-radius: 25px;
   align-items: center;
   justify-content: center;
 }
