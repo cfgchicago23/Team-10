@@ -59,6 +59,14 @@ window.open("https://www.stjamesresearchcentre.org/courses", "_blank");
 //display the respective menu
 };
 
+const Tile = ({ id, onClick, isActive, text, index }) => {
+  const tileClassName = isActive ? 'tile active' : 'tile';
+  return (
+    <div className={tileClassName} onClick={() => onClick(id, index)}>
+      <p>{text}</p>
+    </div>
+  );
+};
 
 const renderTiles = () => {
 const tiles = [];
@@ -69,6 +77,8 @@ tiles.push(<Tile key={i} id={i} onClick={handleClick} index={i} isActive={isActi
 }
 return tiles;
 };
+
+
 const handleChange = (event, newValue) => {
 setValue(newValue);
 if (newValue === 0){
@@ -82,38 +92,18 @@ navigate('/club');
 // Navigate to the selected value
 };
 return (
-<div className="App">
-<div className="grid">{renderTiles()}</div>
-<BottomNavigation className = "custom-bottom-navigation"
-value={value}
-onChange={handleChange}
-// onChange={(e, newValue) => {
-// setValue(newValue);
-// if (newValue === 'home') {
-// // Navigate to the home screen or component
-// // You can use a routing library like React Router to handle navigation
-// history.push('/content_page');
-// } else if (newValue === 'club') {
-// // Navigate to the club screen or component
-// history.push('/club');
-// }
-// }}
->
-<BottomNavigationAction label="Home"
-icon={<HomeIcon />} />
-<BottomNavigationAction label="Clubs"
-icon={<LocationOnIcon />} />
-</BottomNavigation>
-</div>
+  <div className="App">
+    <div className="grid">{renderTiles()}</div>
+    <BottomNavigation className="custom-bottom-navigation"
+      value={value}
+      onChange={handleChange}
+    >
+      <BottomNavigationAction label="Home" icon={<HomeIcon />} />
+      <BottomNavigationAction label="Clubs" icon={<LocationOnIcon />} />
+    </BottomNavigation>
+  </div>
 );
 };
-// return <h1>Hello</h1>;
-// return (
-// <div className="App">
-// <div className="grid">{renderTiles()}</div>
-// </div>
-// );
-// };
 
 
 export default ContentPage;
