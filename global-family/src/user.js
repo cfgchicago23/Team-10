@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 class UserPage extends Component {
     state = {
-        clubs: [{id: 1, name: "Test Club"}],
-        joinedClubs: [{id: 1, name: "Test Club"}],
+        clubs: [],
+        joinedClubs: [],
         showJoinedClubs: false,
         userId: 1
     }
@@ -16,6 +16,7 @@ class UserPage extends Component {
                 console.log("Fetched clubs:", data);  // <-- Add this
                 this.setState({ clubs: data });
             });
+            
     }
 
     handleJoinClub = (clubId) => {
