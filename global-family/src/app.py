@@ -68,6 +68,7 @@ def create_club():
 
 @app.route('/api/clubs/<int:club_id>', methods=['DELETE'])
 def delete_club(club_id):
+    print(f"Attempting to delete club with ID: {club_id}")
     club = Club.query.get_or_404(club_id)
     db.session.delete(club)
     db.session.commit()
