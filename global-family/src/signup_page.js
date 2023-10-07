@@ -88,7 +88,7 @@ const SignUpPage = () => {
     <Container style={{ marginTop: '0', background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', padding: '40px', borderRadius: '0', position: 'relative', height: '100vh' }}>
       <CssBaseline />
       <Typography variant="h2" style={{ color: '#FFF', position: 'absolute', top: '10px', left: '10px', fontFamily: 'cursive' }}>
-        Athena
+        Thrive
       </Typography>
       <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%">
         <Typography variant="h4" gutterBottom style={{ color: '#FFF', textAlign: 'center', fontFamily: 'sans-serif' }}>
