@@ -10,6 +10,8 @@ from dotenv import dotenv_values
 # load .env variables
 config = dotenv_values("./database/.env")
 
+global SIGNED_IN_USER
+
 app = Flask(__name__)
 
 # set up connection to mongo db server
@@ -29,17 +31,40 @@ clubs = db["clubs"]
 @app.route('/api/clubs/add', methods=['POST'])
 def add_club():
     club_data = request.get_json()
+    if (SIGNED_IN_USER is not None) & (SIGNED_IN_USER['type'] == 'student'):
+        return jsonify({"error": "User must be a club leader."}, 400)
+
     # parse json
     club_name = club_data['name']
     club_description = club_data['description']
+    club_country = club_data['country']
 
     # generate UUID for club
     club_id = uuid.uuid4()
 
-    # club_mentor_id
-    # club_members
-    # club_pending_members
-    return jsonify({"message": "Club added successfully."})
+    club_mentor_id = SIGNED_IN_USER['_id']
+    club_members = []
+    club_pending_members = []
+
+    # create document and insert into collection
+    club_document = {
+        "club_id": club_id.hex,
+        "mentor_id": club_mentor_id.hex,
+        "name": club_name,
+        "description": club_description,
+        "members": club_members,
+        "pending_members": club_pending_members,
+        "country": club_country
+    }
+
+    # validate that it is not a duplicate club
+    if clubs.find_one({'name': club_name}) is not None:
+        return jsonify({"error": "This club already exists"}), 400
+
+    clubs.insert_one(club_document)
+
+    return '', 200
+
 
 @app.route("/api/signup", methods=["POST"])
 def signup():
@@ -55,6 +80,7 @@ def signup():
         user_password = user_data["password"]
         user_type = user_data["type"]
         user_name = user_data["name"]
+        user_country = user_data['country']
 
         # generate UUID for user id
         user_id = uuid.uuid4()
@@ -69,7 +95,9 @@ def signup():
             "email": user_email,
             "password": hashed_password,
             "type": user_type,
-            "clubs": []
+            "country": user_country,
+            "clubs": [],
+            "percent_tracker": {}
         }
 
         # validate that it is not a duplicate email
@@ -98,9 +126,11 @@ def login():
             return jsonify({'error': 'The user account with this email does not exist!'}), 400
 
         # validate the password
-        check_password = bcrypt.checkpw(user_document['password'], user_password.encode('utf-8'))
+        check_password = bcrypt.checkpw(user_password.encode('utf-8'), user_document['password'])
         if check_password is True:
-            return user_document['_id'], 200
+            global SIGNED_IN_USER
+            SIGNED_IN_USER = user_document
+            return '', 200
 
     except Exception as e:
         return f"error message: \n{e}", 400
