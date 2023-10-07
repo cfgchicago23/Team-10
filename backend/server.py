@@ -6,6 +6,7 @@ from pymongo import MongoClient
 import bcrypt
 import uuid
 from dotenv import dotenv_values
+from flask_cors import CORS, cross_origin
 
 # load .env variables
 config = dotenv_values("./database/.env")
