@@ -9,18 +9,18 @@ services:
       - '27017:27017'
     volumes:
       - 'mongo_data:/data/db'
-  flask:
-    build:
-      context: ../
-    container_name: flask-app
-    ports:
-      - "8000:8000"
-    depends_on:
-      - mongo
-    command: [ "python", "server.py" ]  # Replace with the command to start your Flask app
-    environment:
-      - FLASK_APP=server.py
-      - FLASK_RUN_HOST=0.0.0.0
-      - FLASK_PORT=8000
+#  flask:
+#    build:
+#      context: ../
+#    container_name: flask-app
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      - mongo
+#    command: [ "python", "server.py" ]  # Replace with the command to start your Flask app
+#    environment:
+#      - FLASK_APP=server.py
+#      - FLASK_RUN_HOST=0.0.0.0
+#      - FLASK_PORT=8000
 volumes:
   mongo_data:
