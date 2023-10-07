@@ -1,4 +1,5 @@
 flask
 pymongo
-PyPDF2
 bcrypt
+flask-cors
+python-dotenv
