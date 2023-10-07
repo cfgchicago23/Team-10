@@ -9,14 +9,24 @@ class ClubList extends Component {
       isLoading: true,
       error: null,
       search: '',
-      newClubName: '', // New club name input field
-      clubMembers: {}, // Store club members as an object
-      expandedClub: null, // Store the ID of the expanded club
+      newClubName: '',
+      newClubDescription: '', // New club description field
+      newClubCountry: '', // New club country field
+      clubMembers: {},
+      expandedClub: null,
     };
   }
 
   componentDidMount() {
     this.fetchClubs();
+  }
+
+  handleNewClubDescriptionChange = (e) => {
+    this.setState({ newClubDescription: e.target.value });
+  }
+
+  handleNewClubCountryChange = (e) => {
+    this.setState({ newClubCountry: e.target.value });
   }
 
   fetchClubs() {
@@ -85,48 +95,48 @@ class ClubList extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { newClubName } = this.state;
+  const { newClubName, newClubDescription, newClubCountry } = this.state; // Added 'this.state'
 
-    // Create a new club object
-    const newClub = {
-      id: this.state.clubs.length + 1, // Use this.state.clubs to access clubs
+  const newClub = {
+    id: this.state.clubs.length + 1,
+    name: newClubName,
+    description: newClubDescription, // Access using this.state
+    country: newClubCountry, // Access using this.state
+    mentor_id: 1,
+  };
+
+  this.setState((prevState) => ({
+    clubs: [...prevState.clubs, newClub],
+    newClubName: '',
+    newClubDescription: '',
+    newClubCountry: '',
+  }));
+
+  fetch('/api/clubs/add', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
       name: newClubName,
-      description: '', // You can add a description field if needed
-      mentor_id: 1, // Replace with the actual mentor ID
-    };
-
-    // Update the local state with the new club
-    this.setState((prevState) => ({
-      clubs: [...prevState.clubs, newClub],
-      newClubName: '', // Clear the input field
-    }));
-
-    // Submit the new club name to the server
-    fetch('/api/clubs/add', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: newClubName,
-        description: '', // You can add a description field if needed
-        mentor_id: 1, // Replace with the actual mentor ID
-      }),
+      description: newClubDescription, // Access using this.state
+      country: newClubCountry, // Access using this.state
+      mentor_id: 1,
+    }),
+  })
+    .then((response) => response.json())
+    .then(() => {
+      this.fetchClubs();
+      this.setState({ newClubName: '', newClubDescription: '', newClubCountry: '' });
     })
-      .then((response) => response.json())
-      .then(() => {
-        // After successfully adding the club, fetch the updated list of clubs
-        this.fetchClubs();
-        this.setState({ newClubName: '' }); // Clear the input field
-      })
-      .catch((error) => {
-        console.error('Error adding club:', error);
-      });
+    .catch((error) => {
+      console.error('Error adding club:', error);
+    });
   }
 
   render() {
-    const { clubs, isLoading, error, search, newClubName, clubMembers, expandedClub } = this.state;
+    const { clubs, isLoading, error, search, newClubName, newClubDescription, newClubCountry, clubMembers, expandedClub } = this.state;
     const filteredClubs = clubs.filter(club => club.name.toLowerCase().includes(search.toLowerCase()));
 
     return (
@@ -141,6 +151,20 @@ class ClubList extends Component {
             className="club-name-input"
             value={newClubName}
             onChange={this.handleNewClubNameChange}
+          />
+          <input 
+            type="text" 
+            placeholder="Enter club description" 
+            className="club-description-input"
+            value={newClubDescription}
+            onChange={this.handleNewClubDescriptionChange}
+          />
+          <input 
+            type="text" 
+            placeholder="Enter club country" 
+            className="club-country-input"
+            value={newClubCountry}
+            onChange={this.handleNewClubCountryChange}
           />
           <button type="submit">Add Club</button>
         </form>
@@ -174,6 +198,7 @@ class ClubList extends Component {
                 {expandedClub === club.id ? 'Collapse' : 'Expand'}
               </button>
               {club.description && <p>{club.description}</p>}
+              <p>Country: {club.country}</p> {/* Display the country */}
               <button onClick={() => this.handleDelete(club.id)}>Delete</button>
             </li>
           ))}
