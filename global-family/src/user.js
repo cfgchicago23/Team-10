@@ -56,6 +56,12 @@ class UserPage extends Component {
                     <MenuItem value="USA">USA</MenuItem>
                     <MenuItem value="Canada">Canada</MenuItem>
                     <MenuItem value="UK">UK</MenuItem>
+                    <MenuItem value="UK">Nepal</MenuItem>
+                    <MenuItem value="UK">India</MenuItem>
+                    <MenuItem value="UK">China</MenuItem>
+                    <MenuItem value="UK">Brazil</MenuItem>
+                    <MenuItem value="UK">Mexico</MenuItem>
+                    <MenuItem value="UK">Spain</MenuItem>
                     {/* Add more countries as needed */}
                 </Select>
                 {filteredClubs.map(club => (
