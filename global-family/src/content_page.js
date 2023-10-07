@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import './App.css';
+import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import "./App.css";
 
 const Tile = ({ id, onClick, isActive }) => {
-  const tileClassName = isActive ? 'tile active' : 'tile';
+  const tileClassName = isActive ? "tile active" : "tile";
   return <div className={tileClassName} onClick={() => onClick(id)} />;
 };
 
@@ -21,7 +22,9 @@ const ContentPage = () => {
     const tiles = [];
     for (let i = 0; i < 16; i++) {
       const isActive = activeTiles.includes(i);
-      tiles.push(<Tile key={i} id={i} onClick={handleClick} isActive={isActive} />);
+      tiles.push(
+        <Tile key={i} id={i} onClick={handleClick} isActive={isActive} />
+      );
     }
     return tiles;
   };
@@ -32,5 +35,13 @@ const ContentPage = () => {
     </div>
   );
 };
+// return <h1>Hello</h1>;
+
+// return (
+//   <div className="App">
+//     <div className="grid">{renderTiles()}</div>
+//   </div>
+// );
+// };
 
 export default ContentPage;
