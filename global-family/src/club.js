@@ -40,10 +40,25 @@ class ClubList extends Component {
   handleNewClubNameChange = (e) => {
     this.setState({ newClubName: e.target.value });
   }
+  handleDelete = (clubId) => {
+    fetch(`/api/clubs/${clubId}`, {
+      method: 'DELETE',
+    })
+      .then((response) => response.json())
+      .then(() => {
+        // After successfully deleting the club, fetch the updated list of clubs
+        this.fetchClubs();
+      })
+      .catch((error) => {
+        console.error('Error deleting club:', error);
+      });
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
     const { newClubName } = this.state;
+
+    
   
     // Create a new club object
     const newClub = {
@@ -112,8 +127,9 @@ class ClubList extends Component {
         <ul className="club-list">
           {filteredClubs.map((club) => (
             <li key={club.id} className="club-item">
-              <h2>{club.name}</h2>
+             <h2>{club.name}</h2>
               {club.description && <p>{club.description}</p>}
+              <button onClick={() => this.handleDelete(club.id)}>Delete</button>
             </li>
           ))}
         </ul>

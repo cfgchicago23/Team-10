@@ -66,6 +66,13 @@ def create_club():
     db.session.commit()
     return jsonify({"message": "Club created successfully.", "club": data})
 
+@app.route('/api/clubs/<int:club_id>', methods=['DELETE'])
+def delete_club(club_id):
+    club = Club.query.get_or_404(club_id)
+    db.session.delete(club)
+    db.session.commit()
+    return jsonify({"message": "Club deleted successfully."})
+
 # API routes for events (similar structure as clubs)
 
 if __name__ == '__main__':
