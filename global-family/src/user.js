@@ -35,6 +35,27 @@ class UserPage extends Component {
             joinedClubs: [...prevState.joinedClubs, clubToJoin]
         }));
     }
+    handleJoinClub = (clubId) => {
+        fetch('/api/join_club', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: this.state.userId,  // Assuming you have userId in the state
+                club_id: clubId,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === "Club joined successfully.") {
+                const clubToJoin = this.state.clubs.find(club => club.id === clubId);
+                this.setState(prevState => ({
+                    joinedClubs: [...prevState.joinedClubs, clubToJoin]
+                }));
+            }
+        });
+    }
 
     toggleJoinedClubs = () => {
         this.setState(prevState => ({

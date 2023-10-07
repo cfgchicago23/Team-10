@@ -58,11 +58,17 @@ class Club(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False)
     users = db.relationship('User', secondary='user_clubs')
 
+
 # User model
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     clubs = db.relationship('Club', secondary='user_clubs')
+
+@app.route('/api/clubs', methods=['GET'])
+def get_all_clubs():
+    clubs = Club.query.all()
+    return jsonify([{"id": club.id, "name": club.name} for club in clubs])
 
 # Association table for many-to-many relationship between User and Club
 user_clubs = db.Table('user_clubs',
