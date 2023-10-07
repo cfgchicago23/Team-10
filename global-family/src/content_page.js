@@ -9,6 +9,7 @@ import { BottomNavigation, BottomNavigationAction }
 from "@mui/material";
 import HomeIcon from '@mui/icons-material/House'
 import LocationOnIcon from '@mui/icons-material/People'
+import { Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -93,6 +94,9 @@ navigate('/club');
 };
 return (
   <div className="App">
+    <Typography variant="h1" align="center" style={{ color: '#FFF', marginBottom: '50px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
+        Thrive
+    </Typography>
     <div className="grid">{renderTiles()}</div>
     <BottomNavigation className="custom-bottom-navigation"
       value={value}
