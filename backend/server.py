@@ -14,12 +14,13 @@ config = dotenv_values("./database/.env")
 global SIGNED_IN_USER
 
 app = Flask(__name__)
+CORS(app)
 
 # set up connection to mongo db server
-db_client = MongoClient('localhost',
+db_client = MongoClient('0.0.0.0',
                         27017,
-                        username=config['MONGO_USERNAME'],
-                        password=config['MONGO_PASSWORD'],
+                        username='team10',
+                        password='team10',
                         uuidRepresentation='standard')
 db = db_client['flask_db']
 
@@ -201,6 +202,7 @@ def signout():
 
 
 @app.route("/api/login", methods=["POST"])
+
 def login():
     try:
         user_data = request.get_json()
