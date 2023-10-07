@@ -91,7 +91,7 @@ const Login = () => {
             textAlign: "center",
             fontFamily: "sans-serif",
           }}
-          className="please-login"
+          className="hide-when-small"
         >
           Please log in
         </Typography>
@@ -103,6 +103,7 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             style={{ marginBottom: "20px", background: "#FFF" }}
+            className="text-field"
           />
           <TextField
             fullWidth
@@ -111,6 +112,7 @@ const Login = () => {
             type="password"
             onChange={(e) => setpassword(e.target.value)}
             style={{ marginBottom: "20px", background: "#FFF" }}
+            className="text-field"
           />
           <Button variant="contained" color="primary" type="submit" fullWidth>
             Submit
@@ -125,6 +127,7 @@ const Login = () => {
             textAlign: "center",
             fontFamily: "sans-serif",
           }}
+          className="dont-have-account"
         >
           Don't have an account?
         </Typography>

@@ -131,24 +131,13 @@ body {
     visibility: hidden;
   }
 
-  .please-login {
-    padding-top: 50px;
-    font-size:smaller;
-    background-color: red;
-  }
-  }
-  
-  @media only screen and (min-width: 480px) and (max-width: 1024px) {
-  /* show element on medium-sized screens */
-  .container {
-    padding: 40px;
-    border-radius: 10px;
-    position: relative;
-    height: auto;
+  .dont-have-account {
+    margin-top: 20px;
+    font-size: 0.8rem;
+
+
   }
 
-  .title {
-    font-size: 2rem;
   }
-  }
+ 
   
