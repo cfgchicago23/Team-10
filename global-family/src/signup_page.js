@@ -63,7 +63,7 @@ const SignUpPage = () => {
     // console.log("status:", response.status);
 
     var xhr = new XMLHttpRequest();
-    var url = "http://127.0.0.1:8000/api/signup";
+    var url = "http://127.0.0.1:3000/api/signup";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
