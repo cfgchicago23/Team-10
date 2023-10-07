@@ -68,7 +68,7 @@ def get_all_clubs():
 @app.route('/api/clubs', methods=['GET'])
 def get_all_clubs():
     clubs = Club.query.all()
-    return jsonify([club.name for club in clubs])
+    return jsonify([{"id": club.id, "name": club.name} for club in clubs])
 
 if __name__ == '__main__':
     db.create_all()

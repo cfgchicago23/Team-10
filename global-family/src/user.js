@@ -2,20 +2,18 @@ import React, { Component } from 'react';
 
 class UserPage extends Component {
     state = {
-        clubs: [],
-        joinedClubs: [],
+        clubs: [{id: 1, name: "Test Club"}],
+        joinedClubs: [{id: 1, name: "Test Club"}],
         showJoinedClubs: false,
-        userId: 1  // Assuming a static user ID for simplicity
+        userId: 1
     }
 
-    componentDidMount() {
-        this.fetchAllClubs();
-    }
 
     fetchAllClubs = () => {
         fetch('/api/clubs')
             .then(response => response.json())
             .then(data => {
+                console.log("Fetched clubs:", data);  // <-- Add this
                 this.setState({ clubs: data });
             });
     }
@@ -48,11 +46,16 @@ class UserPage extends Component {
             showJoinedClubs: !prevState.showJoinedClubs
         }));
     }
+    componentDidMount() {
+        console.log("Component did mount");
+        this.fetchAllClubs();
+    }
 
     render() {
+        console.log("Rendering with state:", this.state);
         return (
             <div>
-                <h2>Available Clubs</h2>
+                <h2>Clubs</h2>
                 <ul>
                     {this.state.clubs.map(club => (
                         <li key={club.id}>
