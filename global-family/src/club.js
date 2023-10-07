@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import './ClubList.css';
+import { Button, TextField, List, ListItem, ListItemText, Container, Typography, Card, CardContent, CardActions, CssBaseline } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { motion } from 'framer-motion';
 
 
 class ClubList extends Component {
@@ -141,72 +145,92 @@ class ClubList extends Component {
     const filteredClubs = clubs.filter(club => club.name.toLowerCase().includes(search.toLowerCase()));
 
     return (
-      <div className="club-container">
-        <h1 className="club-header">Club List for Leaders</h1>
-        <h3 className="header-two">Want to add a club? Add here! (Name, Description, and Country!)</h3>
+      <Container maxWidth="lg" style={{ marginTop: '40px', background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', padding: '40px', borderRadius: '15px' }}>
+        <CssBaseline />
+        <Typography variant="h2" gutterBottom style={{ color: '#FFF' }}>
+          Club List for Leaders
+        </Typography>
+        <Typography variant="h6" gutterBottom style={{ color: '#FFF' }}>
+          Want to add a club? Add here! (Name, Description, and Country!)
+        </Typography>
         {isLoading && <p>Loading clubs...</p>}
         {error && <p>Error loading clubs: {error.message}</p>}
-        <form className="form" onSubmit={this.handleSubmit}>
-          <input 
-            type="text" 
-            placeholder="Enter club name" 
-            className="club-name-input"
+        <form onSubmit={this.handleSubmit}>
+          <TextField 
+            fullWidth
+            variant="outlined"
+            placeholder="Enter club name"
             value={newClubName}
             onChange={this.handleNewClubNameChange}
+            style={{ marginBottom: '20px', background: '#FFF' }}
           />
-          <input 
-            type="text" 
-            placeholder="Enter club description" 
-            className="club-description-input"
+          <TextField 
+            fullWidth
+            variant="outlined"
+            placeholder="Enter club description"
             value={newClubDescription}
             onChange={this.handleNewClubDescriptionChange}
+            style={{ marginBottom: '20px', background: '#FFF' }}
           />
-          <input 
-            type="text" 
-            placeholder="Enter club country" 
-            className="club-country-input"
+          <TextField 
+            fullWidth
+            variant="outlined"
+            placeholder="Enter club country"
             value={newClubCountry}
             onChange={this.handleNewClubCountryChange}
+            style={{ marginBottom: '20px', background: '#FFF' }}
           />
-          <button type="submit">Add Club</button>
+          <Button variant="contained" color="primary" type="submit">
+            Add Club
+          </Button>
         </form>
-        <h3 className="header-two">Search Existing Clubs</h3>
-        <input 
-          type="text" 
-          placeholder="Search clubs..." 
-          className="club-search"
-          value={search}
-          onChange={this.handleSearchChange}
+        <TextField 
+            fullWidth
+            variant="outlined"
+            placeholder="Search clubs..."
+            value={search}
+            onChange={this.handleSearchChange}
+            style={{ marginBottom: '20px', background: '#FFF' }}
         />
-        <ul className="club-list">
-          {filteredClubs.map((club) => (
-            <li key={club.id} className="club-item">
-              <h2>{club.name}</h2>
-              {expandedClub === club.id && clubMembers[club.id] && (
-                <div>
-                  <p>Members:</p>
-                  <ul className="club-members-list">
+        {filteredClubs.map((club) => (
+          <motion.div key={club.id} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <Card style={{ marginBottom: '20px' }}>
+              <CardContent>
+                <Typography variant="h5">{club.name}</Typography>
+                <Typography color="textSecondary">{club.description}</Typography>
+                <Typography color="textSecondary">Country: {club.country}</Typography>
+                {expandedClub === club.id && clubMembers[club.id] && (
+                  <List>
                     {clubMembers[club.id].map((member, index) => (
-                      <li key={index} className="club-member-item">
-                        {member}
-                      </li>
+                      <ListItem key={index}>
+                        <ListItemText primary={member} />
+                      </ListItem>
                     ))}
-                  </ul>
-                </div>
-              )}
-              <button
-                className="club-expand-button"
-                onClick={() => this.handleExpandClub(club.id)}
-              >
-                {expandedClub === club.id ? 'Collapse' : 'Expand'}
-              </button>
-              {club.description && <p>{club.description}</p>}
-              <p>Country: {club.country}</p> {/* Display the country */}
-              <button onClick={() => this.handleDelete(club.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      </div>
+                  </List>
+                )}
+              </CardContent>
+              <CardActions>
+                <Button 
+                  variant="contained" 
+                  color="primary" 
+                  startIcon={expandedClub === club.id ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  onClick={() => this.handleExpandClub(club.id)}
+                >
+                  {expandedClub === club.id ? 'Collapse' : 'Expand'}
+                </Button>
+                <Button 
+                  variant="contained" 
+                  color="secondary" 
+                  startIcon={<DeleteIcon />}
+                  onClick={() => this.handleDelete(club.id)}
+                >
+                  Delete
+                </Button>
+              </CardActions>
+            </Card>
+          </motion.div>
+        ))}
+      </Container>
     );
   }
 }

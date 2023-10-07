@@ -5,11 +5,15 @@ import { motion } from 'framer-motion';
 
 class UserPage extends Component {
     state = {
-        clubs: [{id: 1, name: "Test Club", country: "USA"}], // Added country for demonstration
+        clubs: [{id: 1, name: "Thrive For Girls", country: "Nepal"}], // Added country for demonstration
         joinedClubs: [],
         userId: 1,
         searchName: '',
         searchCountry: ''
+    }
+    constructor(props) {
+        super(props);
+        this.handleJoinClub = this.handleJoinClub.bind(this);
     }
 
 
@@ -19,6 +23,15 @@ class UserPage extends Component {
 
     handleSearchCountryChange = (e) => {
         this.setState({ searchCountry: e.target.value });
+    }
+    handleJoinClub(clubId) {
+    //need to add more logic for this part
+        const clubToJoin = this.state.clubs.find(club => club.id === clubId);
+        if (!this.state.joinedClubs.includes(clubToJoin)) {
+            this.setState(prevState => ({
+                joinedClubs: [...prevState.joinedClubs, clubToJoin]
+            }));
+        }
     }
 
     filteredClubs = () => {
