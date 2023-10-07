@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './ClubList.css';
 
+
 class ClubList extends Component {
   constructor() {
     super();
