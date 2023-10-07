@@ -1,22 +1,37 @@
 import React, { Component } from 'react';
-import './ClubList.css';
+import { Button, TextField, List, ListItem, ListItemText, Container, Typography, Select, MenuItem, Card, CardContent, CardActions, CssBaseline } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { motion } from 'framer-motion';
+
 
 class ClubList extends Component {
   constructor() {
     super();
     this.state = {
       clubs: [],
-      isLoading: true,
+      isLoading: false,
       error: null,
       search: '',
-      newClubName: '', // New club name input field
-      clubMembers: {}, // Store club members as an object
-      expandedClub: null, // Store the ID of the expanded club
+      newClubName: '',
+      newClubDescription: '', // New club description field
+      newClubCountry: '', // New club country field
+      clubMembers: {},
+      expandedClub: null,
     };
   }
 
   componentDidMount() {
-    this.fetchClubs();
+    //this.fetchClubs();
+  }
+
+  handleNewClubDescriptionChange = (e) => {
+    this.setState({ newClubDescription: e.target.value });
+  }
+
+  handleNewClubCountryChange = (e) => {
+    this.setState({ newClubCountry: e.target.value });
   }
 
   fetchClubs() {
@@ -85,100 +100,150 @@ class ClubList extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { newClubName } = this.state;
+  const { newClubName, newClubDescription, newClubCountry } = this.state; // Added 'this.state'
 
-    // Create a new club object
-    const newClub = {
-      id: this.state.clubs.length + 1, // Use this.state.clubs to access clubs
+  const newClub = {
+    id: this.state.clubs.length + 1,
+    name: newClubName,
+    description: newClubDescription, // Access using this.state
+    country: newClubCountry, // Access using this.state
+    mentor_id: 1,
+  };
+
+  this.setState((prevState) => ({
+    clubs: [...prevState.clubs, newClub],
+    newClubName: '',
+    newClubDescription: '',
+    newClubCountry: '',
+  }));
+
+  fetch('/api/clubs/add', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
       name: newClubName,
-      description: '', // You can add a description field if needed
-      mentor_id: 1, // Replace with the actual mentor ID
-    };
-
-    // Update the local state with the new club
-    this.setState((prevState) => ({
-      clubs: [...prevState.clubs, newClub],
-      newClubName: '', // Clear the input field
-    }));
-
-    // Submit the new club name to the server
-    fetch('/api/clubs/add', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: newClubName,
-        description: '', // You can add a description field if needed
-        mentor_id: 1, // Replace with the actual mentor ID
-      }),
+      description: newClubDescription, // Access using this.state
+      country: newClubCountry, // Access using this.state
+      mentor_id: 1,
+    }),
+  })
+    .then((response) => response.json())
+    .then(() => {
+      this.fetchClubs();
+      this.setState({ newClubName: '', newClubDescription: '', newClubCountry: '' });
     })
-      .then((response) => response.json())
-      .then(() => {
-        // After successfully adding the club, fetch the updated list of clubs
-        this.fetchClubs();
-        this.setState({ newClubName: '' }); // Clear the input field
-      })
-      .catch((error) => {
-        console.error('Error adding club:', error);
-      });
+    .catch((error) => {
+      console.error('Error adding club:', error);
+    });
   }
 
   render() {
-    const { clubs, isLoading, error, search, newClubName, clubMembers, expandedClub } = this.state;
+    const { clubs, isLoading, error, search, newClubName, newClubDescription, newClubCountry, clubMembers, expandedClub } = this.state;
     const filteredClubs = clubs.filter(club => club.name.toLowerCase().includes(search.toLowerCase()));
 
     return (
-      <div className="club-container">
-        <h1 className="club-header">Club List</h1>
+      <Container maxWidth="lg" style={{ marginTop: '40px', background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', padding: '40px', borderRadius: '15px' }}>
+        <CssBaseline />
+        <Typography variant="h2" gutterBottom style={{ color: '#FFF' }}>
+          Club List for Leaders
+        </Typography>
+        <Typography variant="h6" gutterBottom style={{ color: '#FFF' }}>
+          Want to add a club? Add here! (Name, Description, and Country!)
+        </Typography>
         {isLoading && <p>Loading clubs...</p>}
         {error && <p>Error loading clubs: {error.message}</p>}
         <form onSubmit={this.handleSubmit}>
-          <input 
-            type="text" 
-            placeholder="Enter club name" 
-            className="club-name-input"
+          <TextField 
+            fullWidth
+            variant="outlined"
+            placeholder="Enter club name"
             value={newClubName}
             onChange={this.handleNewClubNameChange}
+            style={{ marginBottom: '20px', background: '#FFF' }}
           />
-          <button type="submit">Add Club</button>
+          <TextField 
+            fullWidth
+            variant="outlined"
+            placeholder="Enter description"
+            value={newClubDescription}
+            onChange={this.handleNewClubDescriptionChange}
+            style={{ marginBottom: '20px', background: '#FFF' }}
+          />
+          <Select
+            fullWidth
+            //placeholder="Enter country!"
+            value={newClubCountry}
+            onChange={this.handleNewClubCountryChange}
+            variant="outlined"
+            placeholder="Enter country!"
+            style={{ marginBottom: '20px', background: '#FFF' }}
+          >
+            <MenuItem value=""><em>Select Country</em></MenuItem>
+            <MenuItem value="USA">USA</MenuItem>
+            <MenuItem value="Canada">Canada</MenuItem>
+            <MenuItem value="UK">UK</MenuItem>
+            <MenuItem value="Nepal">Nepal</MenuItem>
+            <MenuItem value="India">India</MenuItem>
+            <MenuItem value="China">China</MenuItem>
+            <MenuItem value="Brazil">Brazil</MenuItem>
+            <MenuItem value="Mexico">Mexico</MenuItem>
+            <MenuItem value="Spain">Spain</MenuItem>
+            {/* Add more countries as needed */}
+          </Select>
+          <Button variant="contained" color="primary" type="submit">
+            Add Club
+          </Button>
         </form>
-        <input 
-          type="text" 
-          placeholder="Search clubs..." 
-          className="club-search"
-          value={search}
-          onChange={this.handleSearchChange}
+        <TextField 
+            fullWidth
+            variant="outlined"
+            placeholder="Search clubs..."
+            value={search}
+            onChange={this.handleSearchChange}
+            style={{ marginBottom: '20px', background: '#FFF' }}
         />
-        <ul className="club-list">
-          {filteredClubs.map((club) => (
-            <li key={club.id} className="club-item">
-              <h2>{club.name}</h2>
-              {expandedClub === club.id && clubMembers[club.id] && (
-                <div>
-                  <p>Members:</p>
-                  <ul className="club-members-list">
+        {filteredClubs.map((club) => (
+          <motion.div key={club.id} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <Card style={{ marginBottom: '20px' }}>
+              <CardContent>
+                <Typography variant="h5">{club.name}</Typography>
+                <Typography color="textSecondary">{club.description}</Typography>
+                <Typography color="textSecondary">Country: {club.country}</Typography>
+                {expandedClub === club.id && clubMembers[club.id] && (
+                  <List>
                     {clubMembers[club.id].map((member, index) => (
-                      <li key={index} className="club-member-item">
-                        {member}
-                      </li>
+                      <ListItem key={index}>
+                        <ListItemText primary={member} />
+                      </ListItem>
                     ))}
-                  </ul>
-                </div>
-              )}
-              <button
-                className="club-expand-button"
-                onClick={() => this.handleExpandClub(club.id)}
-              >
-                {expandedClub === club.id ? 'Collapse' : 'Expand'}
-              </button>
-              {club.description && <p>{club.description}</p>}
-              <button onClick={() => this.handleDelete(club.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      </div>
+                  </List>
+                )}
+              </CardContent>
+              <CardActions>
+                <Button 
+                  variant="contained" 
+                  color="primary" 
+                  startIcon={expandedClub === club.id ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  onClick={() => this.handleExpandClub(club.id)}
+                >
+                  {expandedClub === club.id ? 'Collapse' : 'Expand'}
+                </Button>
+                <Button 
+                  variant="contained" 
+                  color="secondary" 
+                  startIcon={<DeleteIcon />}
+                  onClick={() => this.handleDelete(club.id)}
+                >
+                  Delete
+                </Button>
+              </CardActions>
+            </Card>
+          </motion.div>
+        ))}
+      </Container>
     );
   }
 }

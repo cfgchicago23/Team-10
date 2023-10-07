@@ -1,9 +1,16 @@
-import logo from "./logo.svg";
-import "./App.css";
-import ContentPage from "./content_page.js";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./login_page";
+import ContentPage from "./content_page";
 
-function App() {
-  return <ContentPage />;
-}
+
+const App = () => {
+
+  return (
+    <div>
+    <Login />
+    </div>
+  );
+};
 
 export default App;

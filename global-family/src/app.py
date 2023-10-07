@@ -26,9 +26,10 @@ def add_club():
     data = request.get_json()
     club = Club(
         name=data['name'],
-        description=data['description'],
+        description=data['description'],  # Add the description field
+        country=data['country'],  # Add the country field
         mentor_id=data['mentor_id']
-        # Add other club-related data here
+        # ... other club-related data here
     )
     db.session.add(club)
     db.session.commit()
