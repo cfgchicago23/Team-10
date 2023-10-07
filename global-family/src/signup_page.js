@@ -4,20 +4,81 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./login_page";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignUpPage = () => {
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
+  const [country, setcountry] = useState("");
+  const [userType, setuserType] = useState("");
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [email, setemail] = useState("");
   const [authenticated, setauthenticated] = useState(
     localStorage.getItem(localStorage.getItem("authenticated") || false)
   );
-  const users = [{ username: "Jane", password: "test" }];
+  //   const users = [{ username: "Jane", password: "test" }];
   //   const [logged, setLogged] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  //   const postData = async () => {
+  //     try {
+  //       const response = await axios.post("http://127.0.0.1:8000/signup", {
+  //         data: {
+  //           name: firstName + " " + lastName,
+  //           email: email,
+  //           password: password,
+  //           type: userType,
+  //           country: country,
+  //           // Add other data you want to send in the request body
+  //         },
+  //       });
+  //       console.log("Response:", response.data);
+  //     } catch (error) {
+  //       console.error("Error:", error);
+  //     }
+  //   };
+
+  const handleSubmit = async (e) => {
     // put their username and password into mongodb database
     // if successful, navigate to login page
+    // const newProduct = {
+    //   name: firstName + " " + lastName,
+    //   email: email,
+    //   password: password,
+    //   type: userType,
+    //   country: country,
+    // };
+
+    // console.log("newProduct:", newProduct);
+
+    // const response = await fetch("http://127.0.0.1:8000/signup", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json; charset=utf-8",
+    //   },
+    //   body: JSON.stringify(newProduct),
+    // });
+    // console.log("status:", response.status);
+
+    var xhr = new XMLHttpRequest();
+    var url = "http://127.0.0.1:8000/api/signup";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+        console.log(json.email + ", " + json.password);
+      }
+    };
+    var data = JSON.stringify({
+      name: firstName + " " + lastName,
+      email: email,
+      password: password,
+      type: userType,
+      country: country,
+    });
+    xhr.send(data);
 
     e.preventDefault();
     console.log("in handlesubmit");
@@ -26,7 +87,29 @@ const SignUpPage = () => {
 
   return (
     <div>
+        <h3>Please sign in</h3>
       <form onSubmit={handleSubmit}>
+        <label>First Name</label>
+        <input
+          type="text"
+          name="First Name"
+          value={firstName}
+          onChange={(e) => setfirstName(e.target.value)}
+        />
+        <label>Last Name</label>
+        <input
+          type="text"
+          name="Last Name"
+          value={lastName}
+          onChange={(e) => setlastName(e.target.value)}
+        />
+        <label>Email</label>
+        <input
+          type="text"
+          name="Email"
+          value={email}
+          onChange={(e) => setemail(e.target.value)}
+        />
         <label>Username</label>
         <input
           type="text"
@@ -40,10 +123,27 @@ const SignUpPage = () => {
           name="Password"
           onChange={(e) => setpassword(e.target.value)}
         />
-        <input type="radio" value="Student" name="user-type" /> Student
-        <input type="radio" value="Club Leader" name="user-type" /> Club Leader
+        <input
+          type="radio"
+          value="Student"
+          name="user-type"
+          onChange={(e) => setuserType(e.target.value)}
+        />
+        Student
+        <input
+          type="radio"
+          value="Club Leader"
+          name="user-type"
+          onChange={(e) => setuserType(e.target.value)}
+        />
+        Club Leader
         {/* get their country through a dropdown */}
-        <select class="form-select" id="country" name="country">
+        <select
+          className="form-select"
+          id="country"
+          name="country"
+          onChange={(e) => setcountry(e.target.value)}
+        >
           <option>Select Country</option>
           <option value="AF">Afghanistan</option>
           <option value="AX">Aland Islands</option>

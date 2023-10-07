@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 import bcrypt
 import uuid
@@ -13,6 +14,7 @@ clubs = db.clubs
 
 
 @app.route("/signup", methods=["POST"])
+@cross_origin
 def signup():
     """
     Registers a new user to the system
