@@ -55,7 +55,7 @@ class ClubList extends Component {
   }
 
   fetchClubs() {
-    fetch('/api/clubs')
+    fetch('https://localhost:8000/api/clubs/')
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -105,7 +105,7 @@ class ClubList extends Component {
   }
 
   handleDelete = (clubId) => {
-    fetch(`/api/clubs/${clubId}`, {
+    fetch(`https://localhost:8000/api/clubs/add/${clubId}`, {
       method: 'DELETE',
     })
       .then((response) => response.json())
@@ -128,7 +128,8 @@ class ClubList extends Component {
       country: newClubCountry,
     };
 
-    fetch('/api/clubs/add', {
+    
+    fetch('https://localhost:8000/api/clubs/add', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

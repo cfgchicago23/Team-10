@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import App from "./club";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./login_page";
 import ContentPage from "./content_page";
@@ -17,7 +17,7 @@ root.render(
       <Routes>
         <Route index element={<App />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/ContentPage" element={<ContentPage />} />
+        <Route path="/ContentPage" element={<ContentPage />} /> /* create a button that either directs to leader or member*/
         <Route path="/TraffickingPage" element={<TraffickingPage />} />
         <Route path="/WellnessPage" element={<WellnessPage />} />
         <Route path="/HelpPage" element={<HelpPage />} />
