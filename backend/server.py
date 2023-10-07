@@ -220,6 +220,8 @@ def login():
             global SIGNED_IN_USER
             SIGNED_IN_USER = user_document
             return '', 200
+        else:
+            return jsonify({'error': 'Invalid password'}), 200
 
     except Exception as e:
         return f"error message: \n{e}", 400
