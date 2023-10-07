@@ -55,7 +55,7 @@ class ClubList extends Component {
   }
 
   fetchClubs() {
-    fetch('https://localhost:8000/api/clubs/')
+    fetch('https://localhost:8000/api/clubs/list') // Use the correct API endpoint for fetching clubs
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -104,6 +104,19 @@ class ClubList extends Component {
     }
   }
 
+  // handleDelete = (clubId) => {
+  //   fetch(`https://localhost:8000/api/clubs/add/${clubId}`, {
+  //     method: 'DELETE',
+  //   })
+  //     .then((response) => response.json())
+  //     .then(() => {
+  //       // After successfully deleting the club, fetch the updated list of clubs
+  //       this.fetchClubs();
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error deleting club:', error);
+  //     });
+  // }
   handleDelete = (clubId) => {
     fetch(`https://localhost:8000/api/clubs/add/${clubId}`, {
       method: 'DELETE',
@@ -128,7 +141,6 @@ class ClubList extends Component {
       country: newClubCountry,
     };
 
-    
     fetch('https://localhost:8000/api/clubs/add', {
       method: 'POST',
       headers: {
@@ -145,7 +157,7 @@ class ClubList extends Component {
       .catch((error) => {
         console.error('Error adding club:', error);
       });
-    }
+  }
 
   render() {
     const { clubs, isLoading, error, search, newClubName, newClubDescription, newClubCountry, clubMembers, expandedClub } = this.state;
