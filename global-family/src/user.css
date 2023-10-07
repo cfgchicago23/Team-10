@@ -73,3 +73,27 @@
 .toggle-button:hover {
     background-color: #1e7e34;
 }
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    margin-top: -1px;
+}
+
+button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
