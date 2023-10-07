@@ -18,6 +18,14 @@ class UserPage extends Component {
                 this.setState({ clubs: data });
             });
     }
+    componentDidMount() {
+        // Fetch all clubs and update the state
+        fetch('/api/clubs')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ clubs: data });
+            });
+    }
 
     handleJoinClub = (clubId) => {
         // Logic to join a club
@@ -36,36 +44,29 @@ class UserPage extends Component {
 
     render() {
         return (
-            <div className="user-container">
-                <h2 className="user-header">All Clubs</h2>
-                <ul className="club-list">
+            <div>
+                <h2>Available Clubs</h2>
+                <ul>
                     {this.state.clubs.map(club => (
-                        <li key={club.id} className="club-item">
-                            <span>{club.name}</span>
-                            <button onClick={() => this.handleJoinClub(club.id)}>Join</button>
+                        <li key={club.id}>
+                            {club.name}
+                            <button onClick={() => this.handleJoinClub(club.id)}>Add</button>
                         </li>
                     ))}
                 </ul>
 
-                <button className="toggle-button" onClick={this.toggleJoinedClubs}>
-                    {this.state.showJoinedClubs ? "Hide Joined Clubs" : "Show Joined Clubs"}
-                </button>
-
-                {this.state.showJoinedClubs && (
-                    <div>
-                        <h2 className="user-header">Joined Clubs</h2>
-                        <ul className="club-list">
-                            {this.state.joinedClubs.map(club => (
-                                <li key={club.id} className="club-item">
-                                    <span>{club.name}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
+                <h2>Joined Clubs</h2>
+                <ul>
+                    {this.state.joinedClubs.map(club => (
+                        <li key={club.id}>{club.name}</li>
+                    ))}
+                </ul>
             </div>
         );
     }
 }
 
 export default UserPage;
+
+
+

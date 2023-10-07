@@ -47,6 +47,11 @@ def get_joined_clubs(user_id):
         return jsonify({"joined_clubs": club_ids})
     return jsonify({"error": "User not found or no clubs joined."})
 
+@app.route('/api/clubs', methods=['GET'])
+def get_all_clubs():
+    clubs = Club.query.all()
+    return jsonify([club.name for club in clubs])
+
 # Club model
 class Club(db.Model):
     id = db.Column(db.Integer, primary_key=True)
