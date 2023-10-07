@@ -41,5 +41,5 @@ class LinkedList:
                 current_node = current_node.ref
     
 pages = LinkedList()
-pages.append(1)
-pages.display_list()
+pages.append("hello")
+pages.display_list() 

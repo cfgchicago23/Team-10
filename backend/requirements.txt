@@ -1,3 +1,7 @@
 flask
 pymongo
+<<<<<<< Updated upstream
 PyPDF2
+=======
+PyPDF2
+>>>>>>> Stashed changes
