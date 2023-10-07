@@ -5,6 +5,26 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { motion } from 'framer-motion';
 
+// club_document = {
+//   "club_id": club_id.hex,
+//   "mentor_id": club_mentor_id.hex,
+//   "name": club_name,
+//   "description": club_description,
+//   "members": club_members,
+//   "pending_members": club_pending_members,
+//   "country": club_country
+// }
+
+// user_document = {
+//   "_id": user_id.hex,
+//   "name": user_name,
+//   "email": user_email,
+//   "password": hashed_password,
+//   "type": user_type,
+//   "country": user_country,
+//   "clubs": [],
+//   "percent_tracker": {}
+// }
 
 class ClubList extends Component {
   constructor() {
@@ -23,7 +43,7 @@ class ClubList extends Component {
   }
 
   componentDidMount() {
-    //this.fetchClubs();
+    this.fetchClubs();
   }
 
   handleNewClubDescriptionChange = (e) => {
@@ -36,18 +56,18 @@ class ClubList extends Component {
 
   fetchClubs() {
     fetch('/api/clubs')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        this.setState({ clubs: data, isLoading: false });
-      })
-      .catch((error) => {
-        this.setState({ error, isLoading: false });
-      });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      this.setState({ clubs: data, isLoading: false });
+    })
+    .catch((error) => {
+      this.setState({ error, isLoading: false });
+    });
   }
 
   fetchClubMembers(clubId) {
@@ -100,45 +120,31 @@ class ClubList extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-  const { newClubName, newClubDescription, newClubCountry } = this.state; // Added 'this.state'
+    const { newClubName, newClubDescription, newClubCountry } = this.state;
 
-  const newClub = {
-    id: this.state.clubs.length + 1,
-    name: newClubName,
-    description: newClubDescription, // Access using this.state
-    country: newClubCountry, // Access using this.state
-    mentor_id: 1,
-  };
-
-  this.setState((prevState) => ({
-    clubs: [...prevState.clubs, newClub],
-    newClubName: '',
-    newClubDescription: '',
-    newClubCountry: '',
-  }));
-
-  fetch('/api/clubs/add', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
+    const newClub = {
       name: newClubName,
-      description: newClubDescription, // Access using this.state
-      country: newClubCountry, // Access using this.state
-      mentor_id: 1,
-    }),
-  })
-    .then((response) => response.json())
-    .then(() => {
-      this.fetchClubs();
-      this.setState({ newClubName: '', newClubDescription: '', newClubCountry: '' });
+      description: newClubDescription,
+      country: newClubCountry,
+    };
+
+    fetch('/api/clubs/add', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newClub),
     })
-    .catch((error) => {
-      console.error('Error adding club:', error);
-    });
-  }
+      .then((response) => response.json())
+      .then(() => {
+        this.fetchClubs();
+        this.setState({ newClubName: '', newClubDescription: '', newClubCountry: '' });
+      })
+      .catch((error) => {
+        console.error('Error adding club:', error);
+      });
+    }
 
   render() {
     const { clubs, isLoading, error, search, newClubName, newClubDescription, newClubCountry, clubMembers, expandedClub } = this.state;
