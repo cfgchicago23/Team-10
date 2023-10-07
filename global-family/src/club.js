@@ -167,16 +167,18 @@ class ClubList extends Component {
           <TextField 
             fullWidth
             variant="outlined"
-            placeholder="Enter club description"
+            placeholder="Enter description"
             value={newClubDescription}
             onChange={this.handleNewClubDescriptionChange}
             style={{ marginBottom: '20px', background: '#FFF' }}
           />
           <Select
             fullWidth
+            //placeholder="Enter country!"
             value={newClubCountry}
             onChange={this.handleNewClubCountryChange}
             variant="outlined"
+            placeholder="Enter country!"
             style={{ marginBottom: '20px', background: '#FFF' }}
           >
             <MenuItem value=""><em>Select Country</em></MenuItem>
