@@ -13,13 +13,6 @@ import { Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-
-
-
-
-
-
-
 import { useNavigate } from "react-router-dom";
 
 
@@ -94,9 +87,9 @@ navigate('/club');
 };
 return (
   <div className="App">
-    <Typography variant="h1" align="center" style={{ color: '#FFF', marginBottom: '50px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
-        Thrive
-    </Typography>
+    <Typography variant="h1" className="thrive-title">
+    Thrive
+</Typography>
     <div className="grid">{renderTiles()}</div>
     <BottomNavigation className="custom-bottom-navigation"
       value={value}
