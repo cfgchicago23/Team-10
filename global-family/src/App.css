@@ -93,6 +93,9 @@ body {
   flex-wrap: wrap; /* Allow tiles to wrap to next line */
   gap: 20px; /* Space between tiles */
 }
+.custom-bottom-navigation {
+  padding: 0; /* Adjust padding to 0 */
+}
 
 .custom-bottom-navigation {
   position: absolute;
