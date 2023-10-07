@@ -51,15 +51,22 @@
   margin: 5px 0;
 }
 
-
+.form {
+  margin-bottom: 20px;
+}
 .club-header {
   text-align: center;
   color: #333;
   margin-bottom: 20px;
 }
+.header-two {
+  text-align: left;
+  color: #333;
+  margin-bottom: 10px;
+}
 
 .club-search {
-  width: 100%;
+  width: 98%;
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #ddd;

@@ -6,7 +6,7 @@ class ClubList extends Component {
     super();
     this.state = {
       clubs: [],
-      isLoading: true,
+      isLoading: false,
       error: null,
       search: '',
       newClubName: '',
@@ -18,7 +18,7 @@ class ClubList extends Component {
   }
 
   componentDidMount() {
-    this.fetchClubs();
+    //this.fetchClubs();
   }
 
   handleNewClubDescriptionChange = (e) => {
@@ -141,10 +141,11 @@ class ClubList extends Component {
 
     return (
       <div className="club-container">
-        <h1 className="club-header">Club List</h1>
+        <h1 className="club-header">Club List for Leaders</h1>
+        <h3 className="header-two">Want to add a club? Add here! (Name, Description, and Country!)</h3>
         {isLoading && <p>Loading clubs...</p>}
         {error && <p>Error loading clubs: {error.message}</p>}
-        <form onSubmit={this.handleSubmit}>
+        <form className="form" onSubmit={this.handleSubmit}>
           <input 
             type="text" 
             placeholder="Enter club name" 
@@ -168,6 +169,7 @@ class ClubList extends Component {
           />
           <button type="submit">Add Club</button>
         </form>
+        <h3 className="header-two">Search Existing Clubs</h3>
         <input 
           type="text" 
           placeholder="Search clubs..." 
