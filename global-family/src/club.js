@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, TextField, List, ListItem, ListItemText, Container, Typography, Card, CardContent, CardActions, CssBaseline } from '@mui/material';
+import { Button, TextField, List, ListItem, ListItemText, Container, Typography, Select, MenuItem, Card, CardContent, CardActions, CssBaseline } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
@@ -171,14 +171,25 @@ class ClubList extends Component {
             onChange={this.handleNewClubDescriptionChange}
             style={{ marginBottom: '20px', background: '#FFF' }}
           />
-          <TextField 
+          <Select
             fullWidth
-            variant="outlined"
-            placeholder="Enter club country"
             value={newClubCountry}
             onChange={this.handleNewClubCountryChange}
+            variant="outlined"
             style={{ marginBottom: '20px', background: '#FFF' }}
-          />
+          >
+            <MenuItem value=""><em>Select Country</em></MenuItem>
+            <MenuItem value="USA">USA</MenuItem>
+            <MenuItem value="Canada">Canada</MenuItem>
+            <MenuItem value="UK">UK</MenuItem>
+            <MenuItem value="Nepal">Nepal</MenuItem>
+            <MenuItem value="India">India</MenuItem>
+            <MenuItem value="China">China</MenuItem>
+            <MenuItem value="Brazil">Brazil</MenuItem>
+            <MenuItem value="Mexico">Mexico</MenuItem>
+            <MenuItem value="Spain">Spain</MenuItem>
+            {/* Add more countries as needed */}
+          </Select>
           <Button variant="contained" color="primary" type="submit">
             Add Club
           </Button>
