@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import {useEffect } from 'react';
 import './trafficking';
+import './wellness';
 import {useNavigate} from "react-router-dom";
 
 const Tile = ({ id, onClick, isActive, text, index }) => {
@@ -16,13 +17,13 @@ const Tile = ({ id, onClick, isActive, text, index }) => {
 const ContentPage = () => {
   const navigate = useNavigate();
   const [activeTiles, setActiveTiles] = useState([]);
-  const titles = ["Trafficking", "Wellness", "Awareness", "More Resources"]
+  const titles = ["Trafficking", "Wellness", "Ask for Help", "More Resources"]
   const handleClick = (id, index) => {
     console.log("hi");
     if(index === 0){
         navigate("/TraffickingPage");
     }else if(index === 1){
-        return (<p>1</p>);
+        navigate("/WellnessPage");
     }else if(index === 2){
         return (<p>2</p>);
     }else{
@@ -48,5 +49,13 @@ const ContentPage = () => {
     </div>
   );
 };
+// return <h1>Hello</h1>;
+
+// return (
+//   <div className="App">
+//     <div className="grid">{renderTiles()}</div>
+//   </div>
+// );
+// };
 
 export default ContentPage;

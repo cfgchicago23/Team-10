@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
 const TraffickingPage = () => {
-    return (<h1>yoooo</h1>);
+    return (<div><h1>Trafficking</h1>
+    <p>Enter PDF stuff here</p>
+    </div>);
 }
 
 export default TraffickingPage;
