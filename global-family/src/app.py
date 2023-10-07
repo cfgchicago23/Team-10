@@ -1,3 +1,4 @@
+//import App from './App'; 
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
@@ -19,6 +20,20 @@ class Event(db.Model):
     description = db.Column(db.Text)
     club_id = db.Column(db.Integer, nullable=False)
     # Add other event-related fields here
+
+# API route for adding a new club
+@app.route('/api/clubs/add', methods=['POST'])
+def add_club():
+    data = request.get_json()
+    club = Club(
+        name=data['name'],
+        description=data['description'],
+        mentor_id=data['mentor_id']
+        # Add other club-related data here
+    )
+    db.session.add(club)
+    db.session.commit()
+    return jsonify({"message": "Club added successfully."})
 
 # API routes for clubs
 @app.route('/api/clubs', methods=['GET'])

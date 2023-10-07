@@ -54,6 +54,7 @@ class ClubList extends Component {
               <h2>{club.name}</h2>
               {club.description && <p>{club.description}</p>}
             </li>
+
           ))}
         </ul>
       </div>
@@ -61,4 +62,6 @@ class ClubList extends Component {
   }
 }
 
+
 export default ClubList;
+
