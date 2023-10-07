@@ -5,6 +5,10 @@ import './trafficking';
 import './wellness';
 import './help';
 import './resources';
+import { BottomNavigation, BottomNavigationAction }  
+    from "@mui/material"; 
+import HomeIcon from '@mui/icons-material/House'
+import LocationOnIcon from '@mui/icons-material/People'
 
 import {useNavigate} from "react-router-dom";
 
@@ -18,6 +22,7 @@ const Tile = ({ id, onClick, isActive, text, index }) => {
 
 
 const ContentPage = () => {
+  const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
   const [activeTiles, setActiveTiles] = useState([]);
   const titles = ["Trafficking", "Wellness", "Ask for Help", "More Resources"]
@@ -50,6 +55,17 @@ const ContentPage = () => {
   return (
     <div className="App">
       <div className="grid">{renderTiles()}</div>
+      <BottomNavigation 
+                value={value} 
+                onChange={(e, newValue) => { 
+                    setValue(newValue); 
+                }} 
+            > 
+                <BottomNavigationAction label="Home"
+                    icon={<HomeIcon />} /> 
+                <BottomNavigationAction label="Clubs"
+                    icon={<LocationOnIcon />} /> 
+            </BottomNavigation>
     </div>
   );
 };
