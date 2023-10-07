@@ -5,11 +5,24 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your_database.db'
 db = SQLAlchemy(app)
 
+# Association table for many-to-many relationship between User and Club
+user_clubs = db.Table('user_clubs',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('club_id', db.Integer, db.ForeignKey('club.id'))
+)
+
+# Club model
+class Club(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+    users = db.relationship('User', secondary=user_clubs)
+
 # User model
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    joined_clubs = db.Column(db.String(500))  # This is a simple way to store joined clubs. In a real-world scenario, you'd use a many-to-many relationship.
+    joined_clubs = db.Column(db.String(500))
+    clubs = db.relationship('Club', secondary=user_clubs)
 
 # Route to register a new user
 @app.route('/api/register', methods=['POST'])
@@ -52,29 +65,10 @@ def get_all_clubs():
     clubs = Club.query.all()
     return jsonify([club.name for club in clubs])
 
-# Club model
-class Club(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-    users = db.relationship('User', secondary='user_clubs')
-
-
-# User model
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    clubs = db.relationship('Club', secondary='user_clubs')
-
 @app.route('/api/clubs', methods=['GET'])
 def get_all_clubs():
     clubs = Club.query.all()
-    return jsonify([{"id": club.id, "name": club.name} for club in clubs])
-
-# Association table for many-to-many relationship between User and Club
-user_clubs = db.Table('user_clubs',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('club_id', db.Integer, db.ForeignKey('club.id'))
-)
+    return jsonify([club.name for club in clubs])
 
 if __name__ == '__main__':
     db.create_all()

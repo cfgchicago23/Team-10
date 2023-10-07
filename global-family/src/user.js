@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 
 class UserPage extends Component {
     state = {
-        clubs: [],          // All available clubs
-        joinedClubs: [],    // Clubs that the user has joined
-        showJoinedClubs: false  // Toggle to show/hide joined clubs
+        clubs: [],
+        joinedClubs: [],
+        showJoinedClubs: false,
+        userId: 1  // Assuming a static user ID for simplicity
     }
 
     componentDidMount() {
@@ -18,23 +19,7 @@ class UserPage extends Component {
                 this.setState({ clubs: data });
             });
     }
-    componentDidMount() {
-        // Fetch all clubs and update the state
-        fetch('/api/clubs')
-            .then(response => response.json())
-            .then(data => {
-                this.setState({ clubs: data });
-            });
-    }
 
-    handleJoinClub = (clubId) => {
-        // Logic to join a club
-        // For simplicity, we'll just add the club to the joinedClubs state
-        const clubToJoin = this.state.clubs.find(club => club.id === clubId);
-        this.setState(prevState => ({
-            joinedClubs: [...prevState.joinedClubs, clubToJoin]
-        }));
-    }
     handleJoinClub = (clubId) => {
         fetch('/api/join_club', {
             method: 'POST',
@@ -42,7 +27,7 @@ class UserPage extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                user_id: this.state.userId,  // Assuming you have userId in the state
+                user_id: this.state.userId,
                 club_id: clubId,
             }),
         })
@@ -56,6 +41,7 @@ class UserPage extends Component {
             }
         });
     }
+
 
     toggleJoinedClubs = () => {
         this.setState(prevState => ({
