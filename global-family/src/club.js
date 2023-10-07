@@ -8,6 +8,10 @@ import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
 import { useLocation, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
+
 
 
 class ClubList extends Component {
@@ -151,6 +155,7 @@ class ClubList extends Component {
   }
 
   render() {
+    
     const { clubs, isLoading, error, search, newClubName, newClubDescription, newClubCountry, clubMembers, expandedClub } = this.state;
     const filteredClubs = clubs.filter(club => club.name.toLowerCase().includes(search.toLowerCase()));
     return (
@@ -159,7 +164,9 @@ class ClubList extends Component {
         <Typography variant="h2" gutterBottom style={{ color: '#FFF' }}>
           Club List for Leaders
         </Typography>
+        <Link to="/SpacesPage">
         <Button variant="contained" color="primary">Spaces</Button>
+        </Link>
         <Typography variant="h6" gutterBottom style={{ color: '#FFF' }}>
           Want to add a club? Add here! (Name, Description, and Country!)
         </Typography>

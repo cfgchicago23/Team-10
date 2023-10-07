@@ -5,9 +5,9 @@ import './TwitterSpace.css'; // Import your CSS file
 const AppSpace = () => {
   // Sample user profiles
   const profiles = [
-    'https://via.placeholder.com/30', // Replace with actual image URLs
-    'https://via.placeholder.com/30',
-    'https://via.placeholder.com/30',
+    'https://randomuser.me/api/portraits/women/2.jpg', // Replace with actual image URLs
+    'https://randomuser.me/api/portraits/women/3.jpg',
+    'https://randomuser.me/api/portraits/women/36.jpg',
     // Add more profile URLs as needed
   ];
 

@@ -4,7 +4,8 @@ import AppSpace from './AppSpace';
 const SpacesPage = () => {
   return (
     <div>
-      <AppSpace />
+        <h1> Welcome to Spaces! </h1>
+      <AppSpace/>
     </div>
   );
 };

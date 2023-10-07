@@ -9,7 +9,7 @@ import TraffickingPage from "./trafficking";
 import WellnessPage from "./wellness";
 import HelpPage from "./help";
 import SignUpPage from "./signup_page";
-import ClubPage from "./club";
+import Club from "./club";
 import SpacesPage from "./spaces_page";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -19,7 +19,7 @@ root.render(
       <Routes>
         <Route index element={<App />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/Club" element={<ClubPage />} />
+        <Route path="/Club" element={<Club />} />
         <Route path="/ContentPage" element={<ContentPage />} />
         <Route path="/TraffickingPage" element={<TraffickingPage />} />
         <Route path="/WellnessPage" element={<WellnessPage />} />
