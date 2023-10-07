@@ -1,0 +1,26 @@
+services:
+  mongo:
+    image: 'mongo:latest'
+    container_name: 'mongo-db'
+    environment:
+    - 'MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}'
+    - 'MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}'
+    ports:
+      - '27017:27017'
+    volumes:
+      - 'mongo_data:/data/db'
+  flask:
+    build:
+      context: ../
+    container_name: flask-app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+    command: [ "python", "server.py" ]  # Replace with the command to start your Flask app
+    environment:
+      - FLASK_APP=server.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_PORT=8000
+volumes:
+  mongo_data:
