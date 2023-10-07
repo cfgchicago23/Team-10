@@ -159,7 +159,6 @@ class ClubList extends Component {
         <Typography variant="h2" gutterBottom style={{ color: '#FFF' }}>
           Club List for Leaders
         </Typography>
-        <Button variant="contained" color="primary">Spaces</Button>
         <Typography variant="h6" gutterBottom style={{ color: '#FFF' }}>
           Want to add a club? Add here! (Name, Description, and Country!)
         </Typography>

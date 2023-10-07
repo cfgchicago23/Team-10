@@ -9,6 +9,7 @@ import TraffickingPage from "./trafficking";
 import WellnessPage from "./wellness";
 import HelpPage from "./help";
 import SignUpPage from "./signup_page";
+import ClubPage from "./club";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,14 +18,12 @@ root.render(
       <Routes>
         <Route index element={<App />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/Club" element={<ClubPage />} />
         <Route path="/ContentPage" element={<ContentPage />} />
         <Route path="/TraffickingPage" element={<TraffickingPage />} />
         <Route path="/WellnessPage" element={<WellnessPage />} />
         <Route path="/Club" element={<ClubPage />} />
         <Route path="/HelpPage" element={<HelpPage />} />
         <Route path="/SignUp" element={<SignUpPage />} />
-        <Route path="/SpacesPage" element={<SpacesPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
