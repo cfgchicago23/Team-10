@@ -8,11 +8,16 @@ class ClubList extends Component {
       clubs: [],
       isLoading: true,
       error: null,
-      search: ''
+      search: '',
+      newClubName: '', // New club name input field
     };
   }
 
   componentDidMount() {
+    this.fetchClubs();
+  }
+
+  fetchClubs() {
     fetch('/api/clubs')
       .then((response) => {
         if (!response.ok) {
@@ -32,8 +37,54 @@ class ClubList extends Component {
     this.setState({ search: e.target.value });
   }
 
+  handleNewClubNameChange = (e) => {
+    this.setState({ newClubName: e.target.value });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { newClubName } = this.state;
+  
+    // Create a new club object
+    const newClub = {
+      id: this.state.clubs.length + 1, // Use this.state.clubs to access clubs
+      name: newClubName,
+      description: '', // You can add a description field if needed
+      mentor_id: 1, // Replace with the actual mentor ID
+    };
+  
+    // Update the local state with the new club
+    this.setState((prevState) => ({
+      clubs: [...prevState.clubs, newClub],
+      newClubName: '', // Clear the input field
+    }));
+  
+    // Submit the new club name to the server
+    fetch('/api/clubs/add', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: newClubName,
+        description: '', // You can add a description field if needed
+        mentor_id: 1, // Replace with the actual mentor ID
+      }),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        // After successfully adding the club, fetch the updated list of clubs
+        this.fetchClubs();
+        this.setState({ newClubName: '' }); // Clear the input field
+      })
+      .catch((error) => {
+        console.error('Error adding club:', error);
+      });
+  }
+
   render() {
-    const { clubs, isLoading, error, search } = this.state;
+    const { clubs, isLoading, error, search, newClubName } = this.state;
     const filteredClubs = clubs.filter(club => club.name.toLowerCase().includes(search.toLowerCase()));
 
     return (
@@ -41,6 +92,16 @@ class ClubList extends Component {
         <h1 className="club-header">Club List</h1>
         {isLoading && <p>Loading clubs...</p>}
         {error && <p>Error loading clubs: {error.message}</p>}
+        <form onSubmit={this.handleSubmit}>
+          <input 
+            type="text" 
+            placeholder="Enter club name" 
+            className="club-name-input"
+            value={newClubName}
+            onChange={this.handleNewClubNameChange}
+          />
+          <button type="submit">Add Club</button>
+        </form>
         <input 
           type="text" 
           placeholder="Search clubs..." 
@@ -54,7 +115,6 @@ class ClubList extends Component {
               <h2>{club.name}</h2>
               {club.description && <p>{club.description}</p>}
             </li>
-
           ))}
         </ul>
       </div>
@@ -62,6 +122,4 @@ class ClubList extends Component {
   }
 }
 
-
 export default ClubList;
-
