@@ -1,13 +1,9 @@
-// import logo from './logo.svg';
+import logo from "./logo.svg";
 import "./App.css";
-import Login from "./login_page.js";
+import ContentPage from "./content_page.js";
 
 function App() {
-  return (
-    <div className="App">
-      <Login />
-    </div>
-  );
+  return <ContentPage />;
 }
 
 export default App;
