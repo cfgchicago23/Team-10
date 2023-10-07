@@ -1,4 +1,3 @@
-//import App from './App'; 
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
@@ -33,14 +32,14 @@ def add_club():
     )
     db.session.add(club)
     db.session.commit()
-    return jsonify({"message": "Club added successfully."})
+    return ""#jsonify({"message": "Club added successfully."})
 
 # API routes for clubs
 @app.route('/api/clubs', methods=['GET'])
 def get_clubs():
     clubs = Club.query.all()
     club_list = [{"id": club.id, "name": club.name, "description": club.description} for club in clubs]
-    return jsonify(club_list)
+    return ""#jsonify(club_list)
 
 @app.route('/api/clubs/<int:club_id>', methods=['GET'])
 def get_club(club_id):
@@ -52,7 +51,7 @@ def get_club(club_id):
         "mentor_id": club.mentor_id
         # Add other club-related data here
     }
-    return jsonify(club_data)
+    return ""#jsonify(club_data)
 
 @app.route('/api/clubs', methods=['POST'])
 def create_club():
@@ -64,7 +63,7 @@ def create_club():
     )
     db.session.add(new_club)
     db.session.commit()
-    return jsonify({"message": "Club created successfully.", "club": data})
+    return ""#jsonify({"message": "Club created successfully.", "club": data})
 
 @app.route('/api/clubs/<int:club_id>', methods=['DELETE'])
 def delete_club(club_id):
@@ -72,7 +71,7 @@ def delete_club(club_id):
     club = Club.query.get_or_404(club_id)
     db.session.delete(club)
     db.session.commit()
-    return jsonify({"message": "Club deleted successfully."})
+    return ""#jsonify({"message": "Club deleted successfully."})
 
 # API routes for events (similar structure as clubs)
 
