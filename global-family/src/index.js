@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./login_page";
 import ContentPage from "./content_page";
 import reportWebVitals from "./reportWebVitals";
+import SignUpPage from "./signup_page";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -12,8 +13,9 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route index element={<App />} />
-        <Route path="login" element={<Login />} />
+        <Route path="/Login" element={<Login />} />
         <Route path="/ContentPage" element={<ContentPage />} />
+        <Route path="/SignUp" element={<SignUpPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

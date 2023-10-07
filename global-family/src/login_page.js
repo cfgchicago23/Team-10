@@ -18,6 +18,7 @@ const Login = () => {
     console.log("in handlesubmit");
     const account = users.find((user) => user.username === username);
     if (account && account.password === password) {
+      // put into the database that this person logged in
       console.log(" in");
       localStorage.setItem("authenticated", true);
       console.log(" in1");
@@ -49,6 +50,11 @@ const Login = () => {
         />
         <input type="submit" value="Submit" />
       </form>
+
+      {/* if you don't have an account, sign up */}
+      <br />
+      <p>Don't have an account?</p>
+      <button onClick={() => navigate("/SignUp")}>Sign Up</button>
     </div>
   );
 };
