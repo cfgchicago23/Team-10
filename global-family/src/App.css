@@ -36,3 +36,27 @@
     transform: rotate(360deg);
   }
 }
+
+.App {
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 100px);
+  grid-gap: 10px;
+}
+
+.tile {
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  display: flex;
+  border-radius: 25px;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile.active {
+  background-color: blue;
+}
