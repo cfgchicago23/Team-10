@@ -5,21 +5,22 @@ class Node:
         self.ref = None
 
 class LinkedList: 
+    
     def __init__(self):
         self.head = None
 
 
-    #def get_data(self):
-       # return self.data
+    def get_data(self):
+       return self.data
 
-    #def set_data(self, data):
-        #self.data = data
+    def set_data(self, data):
+        self.data = data
  
-    #def get_next(self):
-       # return self.next
+    def get_next(self):
+       return self.next
  
-   #def set_next(self, next):
-        #self.next = next
+    def set_next(self, next):
+        self.next = next
 
     def append(self, data): 
         new_node = Node(data)
@@ -40,6 +41,6 @@ class LinkedList:
                 print(current_node.data)
                 current_node = current_node.ref
     
-pages = LinkedList()
-pages.append("hello")
-pages.display_list() 
+#pages = LinkedList()
+#pages.append("hello")
+#pages.display_list() 
