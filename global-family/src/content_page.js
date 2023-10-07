@@ -3,6 +3,9 @@ import './App.css';
 import {useEffect } from 'react';
 import './trafficking';
 import './wellness';
+import './help';
+import './resources';
+
 import {useNavigate} from "react-router-dom";
 
 const Tile = ({ id, onClick, isActive, text, index }) => {
@@ -25,9 +28,10 @@ const ContentPage = () => {
     }else if(index === 1){
         navigate("/WellnessPage");
     }else if(index === 2){
-        return (<p>2</p>);
+        navigate("/HelpPage");
     }else{
-        return (<p>3</p>);
+      window.open("https://www.stjamesresearchcentre.org/courses", "_blank");
+  
     }
 
     //display the respective menu

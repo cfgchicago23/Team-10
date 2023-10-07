@@ -6,6 +6,8 @@ import Login from "./login_page";
 import ContentPage from "./content_page";
 import reportWebVitals from "./reportWebVitals";
 import TraffickingPage from "./trafficking";
+import WellnessPage from "./wellness";
+import HelpPage from "./help";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,6 +18,8 @@ root.render(
         <Route path="login" element={<Login />} />
         <Route path="/ContentPage" element={<ContentPage />} />
         <Route path="/TraffickingPage" element={<TraffickingPage />} />
+        <Route path="/WellnessPage" element={<WellnessPage />} />
+        <Route path="/HelpPage" element={<HelpPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
