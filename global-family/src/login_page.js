@@ -1,8 +1,7 @@
 import { useState } from "react";
-// import ContentPage from "./content_page";
 import { useNavigate } from "react-router-dom";
-// import Dashboard from "./Dashboard";
-import { useEffect } from "react";
+import { Button, TextField, Container, Typography, CssBaseline, Box } from '@mui/material';
+import { motion } from 'framer-motion';
 import "./App.css";
 
 const Login = () => {
@@ -13,7 +12,7 @@ const Login = () => {
     localStorage.getItem(localStorage.getItem("authenticated") || false)
   );
   const users = [{ username: "Jane", password: "test" }];
-  //   const [logged, setLogged] = useState(null);
+
   const handleSubmit = (e) => {
     // e.preventDefault();
     // console.log("in handlesubmit");
@@ -54,35 +53,45 @@ const Login = () => {
     navigate("/Login");
   };
 
-  //   useEffect(() => {
-  //     navigate("/ContentPage");
-  //   }, [logged]);
-
   return (
-    <div>
-      <h3 className="sign-in-message">Please log in</h3>
-      <form onSubmit={handleSubmit}>
-        <label>Username</label>
-        <input
-          type="text"
-          name="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          name="Password"
-          onChange={(e) => setpassword(e.target.value)}
-        />
-        <input type="submit" value="Submit" />
-      </form>
-
-      {/* if you don't have an account, sign up */}
-      <br />
-      <p>Don't have an account?</p>
-      <button onClick={() => navigate("/SignUp")}>Sign Up</button>
-    </div>
+    <Container style={{ marginTop: '0', background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', padding: '40px', borderRadius: '0', position: 'relative', height: '100vh' }}>
+      <CssBaseline />
+      <Typography variant="h2" style={{ color: '#FFF', position: 'absolute', top: '10px', center: '10px', fontFamily: 'times new roman' }}>
+        Thrive
+      </Typography>
+      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%">
+        <Typography variant="h4" gutterBottom style={{ color: '#FFF', textAlign: 'center', fontFamily: 'sans-serif' }}>
+          Please log in
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField 
+            fullWidth
+            variant="outlined"
+            label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ marginBottom: '20px', background: '#FFF' }}
+          />
+          <TextField 
+            fullWidth
+            variant="outlined"
+            label="Password"
+            type="password"
+            onChange={(e) => setpassword(e.target.value)}
+            style={{ marginBottom: '20px', background: '#FFF' }}
+          />
+          <Button variant="contained" color="primary" type="submit" fullWidth>
+            Submit
+          </Button>
+        </form>
+        <Typography variant="h6" gutterBottom style={{ marginTop: '20px', color: '#FFF', textAlign: 'center', fontFamily: 'sans-serif' }}>
+          Don't have an account?
+        </Typography>
+        <Button variant="outlined" color="secondary" onClick={() => navigate("/SignUp")} fullWidth>
+          Sign Up
+        </Button>
+      </Box>
+    </Container>
   );
 };
 
