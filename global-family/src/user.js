@@ -36,32 +36,31 @@ class UserPage extends Component {
 
     render() {
         return (
-            <div>
-                {/* List of all clubs with join functionality */}
-                <h2>All Clubs</h2>
-                <div>
+            <div className="user-container">
+                <h2 className="user-header">All Clubs</h2>
+                <ul className="club-list">
                     {this.state.clubs.map(club => (
-                        <div key={club.id}>
+                        <li key={club.id} className="club-item">
                             <span>{club.name}</span>
                             <button onClick={() => this.handleJoinClub(club.id)}>Join</button>
-                        </div>
+                        </li>
                     ))}
-                </div>
+                </ul>
 
-                {/* Button to toggle showing joined clubs */}
-                <button onClick={this.toggleJoinedClubs}>
+                <button className="toggle-button" onClick={this.toggleJoinedClubs}>
                     {this.state.showJoinedClubs ? "Hide Joined Clubs" : "Show Joined Clubs"}
                 </button>
 
-                {/* List of clubs user has joined */}
                 {this.state.showJoinedClubs && (
                     <div>
-                        <h2>Joined Clubs</h2>
-                        {this.state.joinedClubs.map(club => (
-                            <div key={club.id}>
-                                <span>{club.name}</span>
-                            </div>
-                        ))}
+                        <h2 className="user-header">Joined Clubs</h2>
+                        <ul className="club-list">
+                            {this.state.joinedClubs.map(club => (
+                                <li key={club.id} className="club-item">
+                                    <span>{club.name}</span>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 )}
             </div>
