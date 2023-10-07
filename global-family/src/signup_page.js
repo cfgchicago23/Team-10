@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-=======
 import { Button, TextField, Container, Typography, CssBaseline, Box, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
->>>>>>> main
 import "./App.css";
 
 const SignUpPage = () => {
