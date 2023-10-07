@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Button, TextField, List, ListItem, ListItemText, ListItemSecondaryAction, Container, Typography, Select, MenuItem } from '@mui/material';
+import { Button, TextField, List, ListItem, ListItemText, Container, Typography, Select, MenuItem, Card, CardContent, CardActions, CssBaseline } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { motion } from 'framer-motion';
 
 class UserPage extends Component {
     state = {
@@ -11,7 +12,6 @@ class UserPage extends Component {
         searchCountry: ''
     }
 
-    // ... other methods ...
 
     handleSearchNameChange = (e) => {
         this.setState({ searchName: e.target.value });
@@ -32,9 +32,10 @@ class UserPage extends Component {
     render() {
         const filteredClubs = this.filteredClubs();
         return (
-            <Container maxWidth="md" style={{ marginTop: '40px' }}>
-                <Typography variant="h4" gutterBottom>
-                    Clubs
+            <Container maxWidth="lg" style={{ marginTop: '40px', background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', padding: '40px', borderRadius: '15px' }}>
+                <CssBaseline />
+                <Typography variant="h2" gutterBottom style={{ color: '#FFF' }}>
+                    Clubs Directory
                 </Typography>
                 <TextField 
                     fullWidth
@@ -42,14 +43,14 @@ class UserPage extends Component {
                     placeholder="Search clubs by name..."
                     value={this.state.searchName}
                     onChange={this.handleSearchNameChange}
-                    style={{ marginBottom: '20px' }}
+                    style={{ marginBottom: '20px', background: '#FFF' }}
                 />
                 <Select
                     fullWidth
                     value={this.state.searchCountry}
                     onChange={this.handleSearchCountryChange}
                     variant="outlined"
-                    style={{ marginBottom: '20px' }}
+                    style={{ marginBottom: '20px', background: '#FFF' }}
                 >
                     <MenuItem value=""><em>Filter by Country</em></MenuItem>
                     <MenuItem value="USA">USA</MenuItem>
@@ -57,45 +58,36 @@ class UserPage extends Component {
                     <MenuItem value="UK">UK</MenuItem>
                     {/* Add more countries as needed */}
                 </Select>
-                <List>
-                    {filteredClubs.length === 0 ? (
-                        <ListItem>
-                            <ListItemText primary="No clubs found." />
-                        </ListItem>
-                    ) : (
-                        filteredClubs.map(club => (
-                            <ListItem key={club.id}>
-                                <ListItemText primary={club.name} secondary={club.country} />
-                                <ListItemSecondaryAction>
-                                    <Button 
-                                        variant="contained" 
-                                        color="primary" 
-                                        startIcon={<AddIcon />}
-                                        onClick={() => this.handleJoinClub(club.id)}
-                                    >
-                                        Add
-                                    </Button>
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                        ))
-                    )}
-                </List>
+                {filteredClubs.map(club => (
+                    <motion.div key={club.id} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+                        <Card style={{ marginBottom: '20px' }}>
+                            <CardContent>
+                                <Typography variant="h5">{club.name}</Typography>
+                                <Typography color="textSecondary">{club.country}</Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button 
+                                    variant="contained" 
+                                    color="primary" 
+                                    startIcon={<AddIcon />}
+                                    onClick={() => this.handleJoinClub(club.id)}
+                                >
+                                    Add
+                                </Button>
+                            </CardActions>
+                        </Card>
+                    </motion.div>
+                ))}
 
-                <Typography variant="h4" gutterBottom style={{ marginTop: '40px' }}>
+                <Typography variant="h4" gutterBottom style={{ marginTop: '40px', color: '#FFF' }}>
                     Joined Clubs
                 </Typography>
                 <List>
-                    {this.state.joinedClubs.length === 0 ? (
-                        <ListItem>
-                            <ListItemText primary="You haven't joined any clubs yet." />
+                    {this.state.joinedClubs.map(club => (
+                        <ListItem key={club.id}>
+                            <ListItemText primary={club.name} secondary={club.country} />
                         </ListItem>
-                    ) : (
-                        this.state.joinedClubs.map(club => (
-                            <ListItem key={club.id}>
-                                <ListItemText primary={club.name} secondary={club.country} />
-                            </ListItem>
-                        ))
-                    )}
+                    ))}
                 </List>
             </Container>
         );
